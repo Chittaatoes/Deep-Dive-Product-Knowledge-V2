@@ -1,0 +1,539 @@
+/* Header Styling */
+/* Styling untuk Header */
+.site-header {
+  background-color: #fff;
+  padding: 10px 20px;
+  border-bottom: 1px solid #ddd;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+  position: fixed; /* Memastikan header tetap di atas */
+  top: 0;
+  left: 0;
+  width: 90%; /* Mengatur lebar header menjadi 100% */
+  z-index: 1000; /* Menjaga header berada di atas elemen lain */
+}
+
+.header-container {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 10px 20px;
+  position: relative;
+}
+
+.logo img {
+  height: 35px;
+}
+
+.main-nav ul {
+  display: flex;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.main-nav li {
+  margin: 0 10px;
+}
+
+.main-nav a {
+  text-decoration: none;
+  color: #333;
+  font-size: 18px;
+  transition: color 0.3s ease, background-color 0.3s ease;
+}
+
+.main-nav a:hover {
+  color: #4CAF50;
+  background-color: #f4f4f4;
+  border-radius: 5px;
+  padding: 5px 10px;
+}
+
+/* Dropdown */
+.dropdown {
+  position: relative;
+  display: inline-block;
+}
+
+.dropbtn {
+  background-color: #f4f4f4;
+  border: none;
+  cursor: pointer;
+  padding: 10px;
+  font-size: 18px;
+  border-radius: 5px;
+}
+
+.dropdown-content {
+  display: none;
+  position: absolute;
+  background-color: #fff;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  min-width: 160px;
+  z-index: 1;
+}
+
+.dropdown-content a {
+  color: #333;
+  padding: 12px 16px;
+  text-decoration: none;
+  display: block;
+  text-align: left;
+}
+
+.dropdown-content a:hover {
+  background-color: #ddd;
+}
+
+.dropdown:hover .dropdown-content {
+  display: block;
+}
+
+.header-right .search-icon img {
+  height: 24px;
+  transition: transform 0.3s ease;
+}
+
+.header-right {
+    margin: 10px; /* Sesuaikan margin jika perlu */
+}
+
+
+/* Search Box */
+.search-box {
+  position: center;
+  top: 90px;
+  width: 300px;
+  z-index: 10;
+}
+
+.search-box input {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border: none;
+  border-radius: 5px;
+  box-sizing: border-box;
+}
+
+.menu-category-header-awal {
+  padding-top: 15px;
+}
+
+.menu-category-header {
+  margin: 40px 0 20px;
+  text-align: center;
+}
+
+.menu-category-header h2 {
+  font-size: 24px;
+  color: #333;
+  border-bottom: 2px solid #ddd;
+  display: inline-block;
+  padding-bottom: 10px;
+}
+
+
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+  }
+  .food-menu {
+    padding-bottom: 40px;
+    text-align: center;
+  }
+  
+  .food-menu h2 {
+    color: #666;
+    margin: 30px auto 30px auto;
+  }
+  
+  .menu-item {
+    position: relative;
+    margin: 15px auto 15px auto;
+    text-align: center;
+    width: 280px;
+    height: 280px;
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+  }
+  
+  .fruits {
+    background-image: url("https://s3.amazonaws.com/projects.loratadin.com/coffeeshop/images/fruits.jpg");
+  }
+  
+  .pasta {
+    background-image: url("https://s3.amazonaws.com/projects.loratadin.com/coffeeshop/images/pasta.jpg");
+  }
+  
+  .steak {
+    background-image: url("https://s3.amazonaws.com/projects.loratadin.com/coffeeshop/images/steak.jpg");
+  }
+  
+  .menu-logo {
+    position: absolute;
+    display: inline-block;
+    width: 16%;
+    top: 14%;
+    left: 42%;
+  }
+  
+  .menu span {
+    position: absolute;
+    top: 30%;
+    left: 30%;
+    color: #d9d9d9;
+  }
+  
+  .fruits span {
+    transition: transform 900ms ease-in-out;
+  }
+  
+  .fruits:hover span {
+    transform: scale(1.5, 1.5) translateY(20px);
+  }
+  
+  .fruits:hover .first-frame {
+    opacity: 1;
+  }
+  
+  .first-frame {
+    position: absolute;
+    top: 8%;
+    left: 8%;
+    width: 83%;
+    height: 81%;
+    border: 2px solid #f6bbbb;
+    z-index: 1;
+    opacity: 0;
+  }
+  
+  .first-frame p {
+    color: #d9d9d9;
+    padding-top: 60%;
+  }
+  
+  .second-frame {
+    position: absolute;
+    top: 51%;
+    left: 9%;
+    border-left: 1px #f6bbbb solid;
+    height: 40%;
+    z-index: 1;
+    opacity: 0;
+  }
+  
+  .second-frame p {
+    color: #f6bbbb;
+    font-size: 20px;
+    padding-left: 6%;
+    padding-bottom: 20%;
+  }
+  
+  .pasta:hover .second-frame {
+    opacity: 1;
+  }
+  
+  .pasta span {
+    transition: transform 900ms ease-in-out;
+  }
+  
+  .pasta:hover span {
+    transform: scale(1.5, 1.5) translateX(-12%) translateY(395%);
+  }
+  
+  .pasta:hover {
+    opacity: 0.7;
+  }
+  
+  .steak .decor-line1 {
+    top: 8%;
+    left: 8%;
+  }
+  
+  .steak .decor-line2 {
+    top: 50%;
+    right: 7%;
+  }
+  
+  .steak .decor-line1,
+  .steak .decor-line2 {
+    position: absolute;
+    width: 0.5%;
+    height: 0.5%;
+    z-index: 1;
+    opacity: 0;
+    background-color: #f6bbbb;
+    animation: mydecor 2s ease-in-out 0s infinite;
+    animation-direction: alternate;
+  }
+  
+  @keyframes mydecor {
+    from {
+      width: 1%;
+    }
+    to {
+      width: 85%;
+    }
+  }
+  
+  .steak:hover .decor-line1,
+  .steak:hover .decor-line2 {
+    opacity: 1;
+  }
+  @media /* medium */ (min-width: 451px) {
+    .food-menu {
+      padding-bottom: 50px;
+      text-align: center;
+    }
+    .food-menu h2 {
+      margin: 60px auto 40px auto;
+    }
+    .menu-item {
+      width: 400px;
+      height: 400px;
+      margin: 50px auto 50px auto;
+    }
+    .menu span {
+      left: 36%;
+    }
+    .second-frame p {
+      font-size: 24px;
+      padding-left: 20%;
+    }
+    .pasta:hover span {
+      transform: scale(1.5, 1.5) translateX(-14%) translateY(550%);
+    }
+    .second-frame {
+      left: 8%;
+      border-left: 2px #f6bbbb solid;
+    }
+  }
+  @media /* large */ (min-width: 769px) {
+    .food-menu {
+      padding-bottom: 80px;
+      text-align: center;
+    }
+    .food-menu h2 {
+      margin: 80px auto 40px auto;
+    }
+    .menu-wrapper {
+      display: flex;
+      justify-content: space-around;
+    }
+    .menu-item {
+      width: 250px;
+      height: 250px;
+    }
+    .menu span {
+      left: 30%;
+    }
+    .second-frame p {
+      font-size: 16px;
+      padding-left: 17%;
+    }
+    .pasta:hover span {
+      transform: scale(1.5, 1.5) translateX(-4%) translateY(350%);
+    }
+  }
+  @media /* extra-large */ (min-width: 1025px) {
+      .food-menu {
+      padding-bottom: 100px;
+    }
+    .food-menu h2 {
+      margin: 60px auto 40px auto;
+    }
+    .menu-item {
+      width: 300px;
+      height: 300px;
+    }
+    .menu-wrapper {
+      max-width: 1200px;
+      margin: 0 auto;
+    }
+    .menu span {
+      left: 32%;
+    }
+    .second-frame p {
+      font-size: 17px;
+    }
+    .pasta:hover span {
+      transform: scale(1.5, 1.5) translateX(-12%) translateY(450%);
+    }
+  }
+
+  body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+.menu-categories {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 20px;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding-bottom: 15px;
+}
+
+.category-item {
+    position: relative;
+    overflow: hidden;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.category-item img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: transform 0.3s ease;
+}
+
+.category-info {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    padding: 20px;
+    background: rgba(0, 0, 0, 0.5);
+    color: #fff;
+    text-align: center;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.category-info h3 {
+    margin: 0;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.category-info p {
+    margin: 5px 0 0;
+    font-size: 16px;
+}
+
+.category-item:hover img {
+    transform: scale(1.1);
+}
+
+.category-item:hover .category-info {
+    opacity: 1;
+}
+
+.no-link {
+  pointer-events: none;
+  cursor: default;
+  text-decoration: none; /* Menghilangkan garis bawah jika ada */
+}
+
+/* Chart Container */
+#chart-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Efek 3D dengan bayangan */
+  max-width: 400px;
+  margin: 20px auto;
+  transition: transform 0.3s ease;
+}
+
+#chart-container:hover {
+  transform: translateY(-10px); /* Efek mengangkat saat di-hover */
+}
+
+/* Chart List */
+#chart-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+#chart-list li {
+  background-color: #fff;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#chart-list li:hover {
+  transform: translateY(-5px); /* Efek mengangkat sedikit saat di-hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Tambahkan bayangan lebih besar saat di-hover */
+}
+
+.chart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.menu-name {
+  flex-grow: 1; /* Memungkinkan nama menu untuk mengambil ruang yang tersedia */
+  font-size: 16px;
+  text-align: left;
+}
+
+.quantity-controls {
+  display: flex;
+  justify-content: flex-end; /* Pastikan tombol berada di sebelah kanan */
+  gap: 5px; /* Jarak antara tombol */
+}
+
+.quantity-controls button {
+  padding: 2px 5px; /* Ukuran tombol */
+  font-size: 14px;
+  cursor: pointer;
+  border: 1px solid #ccc; /* Warna border abu-abu */
+  background-color: #f9f9f9; /* Warna latar belakang netral */
+  border-radius: 3px;
+}
+
+
+/* Button Order */
+#chart-container button {
+  padding: 10px 15px;
+  font-size: 16px;
+  border: none;
+  border-radius: 3px;
+  cursor: pointer;
+  background-color: #007bff;
+  color: #fff;
+  margin: 5px;
+}
+
+#chart-container button:hover {
+  background-color: #0056b3;
+}
+
+/* CSS tambahan untuk textarea */
+#special-request {
+  width: 100%; /* Sesuaikan dengan lebar kontainer */
+  max-width: 500px; /* Maksimal lebar textarea */
+  margin: 20px auto; /* Membuat textarea berada di tengah secara horizontal */
+  padding: 10px; /* Ruang di dalam textarea */
+  border: 1px solid #ccc; /* Border untuk textarea */
+  border-radius: 5px; /* Sudut membulat */
+  box-sizing: border-box; /* Memastikan padding dan border tidak menambah ukuran elemen */
+}
+
+
+/* Button container styling */
+.button-container {
+  margin-top: 10px;
+}
+
