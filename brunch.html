@@ -1,0 +1,596 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Food Menu</title>
+    <link rel="stylesheet" href="styles.css">
+    <style>
+/* Tambahkan sedikit CSS untuk kotak pencarian */
+.search-box {
+            display: none;
+            position: absolute;
+            top: 100px;
+            right: 50px;
+            width: 300px;
+            z-index: 10;
+        }
+
+        .search-box input {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            border: 1px solid #ccc;
+        }
+
+        /* Styling untuk tombol */
+        .button {
+            padding: 10px 20px;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px; /* Gap antara tombol */
+        }
+
+        .button-order {
+            background-color: #4CAF50; /* Warna latar belakang tombol Order (Hijau) */
+            color: white;
+        }
+
+        .button-clear {
+            background-color: #f44336; /* Warna latar belakang tombol Clear (Merah) */
+            color: white;
+        }
+
+        /* Styling untuk Header */
+        .site-header {
+            background-color: #fff;
+            padding: 10px 20px;
+            border-bottom: 1px solid #ddd;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+        }
+
+        .logo img {
+            height: 40px;
+        }
+
+        .main-nav ul {
+            list-style: none;
+            margin: 0;
+            padding: 0;
+            display: flex;
+        }
+
+        .main-nav li {
+            margin: 0 15px;
+        }
+
+        .main-nav a {
+            text-decoration: none;
+            color: #333;
+            font-weight: bold;
+        }
+
+        .header-right a {
+            display: flex;
+            align-items: center;
+        }
+
+        .header-right img {
+            height: 24px;
+        }
+
+        /* Styling untuk Chart Container */
+        #chart-container {
+            max-width: 800px;
+            margin: 20px auto;
+            padding: 20px;
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            background-color: #f9f9f9;
+            box-shadow: 0 0 10px rgba(0,0,0,0.1);
+        }
+
+        #chart-container h2 {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        #chart-list {
+            list-style-type: none;
+            padding: 0;
+        }
+
+        .chart-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 0;
+            border-bottom: 1px solid #ddd;
+        }
+
+        .quantity-controls button {
+            padding: 5px 10px;
+            margin: 0 5px;
+            border: none;
+            border-radius: 3px;
+            background-color: #eee;
+            cursor: pointer;
+        }
+
+        textarea {
+            width: 100%;
+            padding: 10px;
+            font-size: 16px;
+            margin-top: 10px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            box-sizing: border-box;
+        }
+
+        .button-container {
+            display: flex;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+    </style>
+</head>
+
+<header class="site-header">
+    <div class="logo">
+        <a href="index.html">
+            <img src="img/logo.png" alt="Monsier Spoon">
+        </a>
+    </div>
+    <nav class="main-nav">
+        <ul>
+            <li><a href="#">MENU</a></li>
+        </ul>
+    </nav>
+    <div class="header-right">
+        <a href="#" class="search-icon" onclick="toggleSearchBox()">
+            <img src="img/search-icon.png" alt="Search">
+        </a>
+    </div>
+</header>
+<!-- Pembatas Header -->
+
+<body>
+    <!-- Kotak Pencarian -->
+    <div class="search-box" id="search-box">
+        <input type="text" id="search-input" placeholder="Cari menu..." onkeyup="searchMenu()">
+    </div>
+
+    <!-- Menu Items -->
+
+    <!-- Pembatas Kategori Brunch Menu -->
+    <div class="menu-category-header-awal"></div>
+    
+<div class="menu-category-header">
+    <h2>BRUNCH MENU</h2>
+</div>
+
+    <div class="menu-categories">
+        <div class="category-item" data-category="brunch healthy" onclick="handleClick('Super Healthy Bowl')">
+            <a href="#" class="no-link">
+                <img src="img/brunch/healthybowls.jpg" alt="healthybowl">
+                <div class="category-info">
+                    <h3>Super Healthy Bowl</h3>
+                    <p>Strawberry, banana, Granola, Coconut Flake & Goji Berry yg disajikan dengan dragon & Banana Smoothies (Fresh, Sweet & Soury)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!-- Add more menu items similar to above structure -->
+    <div class="menu-categories">
+        <div class="category-item" data-category="brunch savoury" onclick="handleClick('Truffle Egg In Jar')">
+            <a href="#" class="no-link">
+                <img src="img/brunch/truffleegginjar.jpeg" alt="Truffle Egg In Jar">
+                <div class="category-info">
+                    <h3>Truffle Egg In Jar</h3>
+                    <p>Telur, mash potato, cheese & mushroom yang di sajikan di dalam jar dengan sourdough (Savoury)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!-- Basilico Prawn Croissant CUp -->
+    <div class="menu-categories">
+        <div class="category-item" data-category="brunch soury creamy" onclick="handleClick('Basilico Prawn Croissant Cup')">
+            <a href="#" class="no-link">
+                <img src="img/brunch/basilicoprawncroissantcup.jpg" alt="Basilico Prawn Croissant Cup">
+                <div class="category-info">
+                    <h3>Basilico Prawn Croissant Cup</h3>
+                    <p>Croissant cup with pesto mayo & Prawn (Soury & Creamy)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Beef Bacon Egg On Toast-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="brunch sweet savoury" onclick="handleClick('Beef Bacon Egg On Toast')">
+            <a href="#" class="no-link">
+                <img src="img/brunch/beefbacon.jpg" alt="Beef Bacon Egg On Toast">
+                <div class="category-info">
+                    <h3>Beef Bacon Egg On Toast</h3>
+                    <p>Multi bread yang disajikan dengan beef bacon onion caramelize & Egg (Sweet & Savoury)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Avocado Bruschetta-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="brunch salty soury" onclick="handleClick('Avocado Bruschetta')">
+            <a href="#" class="no-link">
+                <img src="img/brunch/bruschetta.jpg" alt="Avocado Bruschetta">
+                <div class="category-info">
+                    <h3>Avocado Bruschetta</h3>
+                    <p>Sourdough with topping mashed avocado & feta cheese (Salty  & Soury)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Croissant benedict-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="brunch creamy" onclick="handleClick('Croissant Benedict')">
+            <a href="#" class="no-link">
+                <img src="img/brunch/benedict.jpg" alt="Croissant Benedict">
+                <div class="category-info">
+                    <h3>Croissant Benedict</h3>
+                    <p>Croissant toast with beef mortadella yang di topping dengan poach egg & hollandaise sauce (Creamy)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Cheese & Tomato Croissant Cup-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="brunch umamy creamy soury" onclick="handleClick('Cheese & Tomato Croissant Cup')">
+            <a href="#" class="no-link">
+                <img src="img/brunch/cheeseandtomatocroissantcup.jpg" alt="Cheese & Tomato Croissant Cup">
+                <div class="category-info">
+                    <h3>Cheese & Tomato Croissant Cup</h3>
+                    <p>Croissant cup with basic parmesan cheese and tomato fondue mixed with red onion inside (Umamy, Creamy, Soury)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--French Toast-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="brunch sweet soury" onclick="handleClick('French Toast')">
+            <a href="#" class="no-link">
+                <img src="img/brunch/frenchtoast.jpg" alt="French Toast">
+                <div class="category-info">
+                    <h3>French Toast</h3>
+                    <p>Roti brioche dengan topping fruit compoted & lemon mix (Sweet & Sour)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Smoked Salmon Egg on Toast-->
+<!--     <div class="menu-categories">
+        <div class="category-item" data-category="brunch" onclick="handleClick('Smoked Salmon Egg on Toast')">
+            <a href="#" class="no-link">
+                <img src="img/brunch/smokedsalmonandeggontoast.jpg" alt="Smoked Salmon Egg on Toast">
+                <div class="category-info">
+                    <h3>Smoked Salmon & Egg on Toast</h3>
+                    <p>Roti()</p>
+                </div>
+            </a>
+        </div>
+    </div> -->
+    <!--Quiche Lorraine-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="brunch salty savoury" onclick="handleClick('Quiche Lorraine')">
+            <a href="#" class="no-link">
+                <img src="img/brunch/quicheloraine.jpg" alt="Quiche Lorraine">
+                <div class="category-info">
+                    <h3>Quiche Lorraine</h3>
+                    <p>Puff pastry dengan isi bacon yang disajikan dengan mix salad (Salty & Savoury)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Monsier Spoon Granola-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="brunch healthy fresh sweet soury" onclick="handleClick('Monsier Spoon Granola')">
+            <a href="#" class="no-link">
+                <img src="img/brunch/granola.jpg" alt="Monsier SPoon Granola">
+                <div class="category-info">
+                    <h3>Monsier Spoon Granola</h3>
+                    <p>Healthy food with mix fruit & peanut yang disajikan dengan yogurth (Sweet & SOury)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+
+
+<!-- Pembatas Kategori Sandwiches -->
+<div class="menu-category-header">
+    <h2>SANDWICHES</h2>
+</div>
+
+    <!-- Wagyu Signature -->
+    <div class="menu-categories">
+        <div class="category-item" data-category="croger burger sandwiches" onclick="handleClick('Wagyu Signature')">
+            <a href="#" class="no-link">
+                <img src="img/sandwich/wagyusignature.jpg" alt="Wagyu Signature">
+                <div class="category-info">
+                    <h3>Wagyu Signature</h3>
+                    <p>Wagyu beef patty, French scrambled eggs, onion, lettuce, cheddar cheese & BBQ sauce on house-made croger bun ()</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!-- Buttermilk Chicken -->
+    <div class="menu-categories">
+        <div class="category-item" data-category="croger burger tasty creamy crispy" onclick="handleClick('Buttermilk Chichken')">
+            <a href="#" class="no-link">
+                <img src="img/sandwich/buttermilkchicken.jpg" alt="Buttermilk Chicken">
+                <div class="category-info">
+                    <h3>Buttermilk Chicken</h3>
+                    <p>Crispy buttermilk chicken with mozza cheese, caramelized onion, lettuce and aioli on house-made croger bun (Tasty, Creamy, Crispy outside)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Pulled Brisket & Egg-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="sandwiches croger burger tasty juicy savoury" onclick="handleClick('Pulled Brisket & Egg')">
+            <a href="#" class="no-link">
+                <img src="img/sandwich/pulledbrisketandegg.jpg" alt="Pulled Brisket & Egg">
+                <div class="category-info">
+                    <h3>Pulled Brisket & Egg</h3>
+                    <p>Croger with pulled brisket, sunny side up egg, bega cheese & BBQ sauce (Tasty, Juicy, Savoury)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Tamago Katsu Mortadella-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="sandwiches croger burger savoury sour" onclick="handleClick('Tamago Katsu Mortadella')">
+            <a href="#" class="no-link">
+                <img src="img/sandwich/tamagokatsumortadella.jpg" alt="Tamago Katsu Mortadella">
+                <div class="category-info">
+                    <h3>Tamago Katsu Mortadella</h3>
+                    <p>Tamago katsu, beef mortadella, tomato, iceberg & Japanese mayo on house-made croger bun (Savoury, Sour)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Truffle scrambled eggs-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="creamy salty" onclick="handleClick('Truffle Scrambled Eggs')">
+            <a href="#" class="no-link">
+                <img src="img/entree/trufflescrambledegg.jpeg" alt="Truffle Scrambled Eggs">
+                <div class="category-info">
+                    <h3>Truffle scrambled Eggs</h3>
+                    <p>Creamy french scrambled eggs, truffle oil, sauted mushrooms & porcini salt (Creamy & Salty)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Smoked Chicken Croissant-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="croissant" onclick="handleClick('Smoked Chicken Croissant')">
+            <a href="#" class="no-link">
+                <img src="img/sandwich/Smoked Chicken Croissant.jpeg" alt="Smoked Chicken Croissant">
+                <div class="category-info">
+                    <h3>Smoked Chicken Croissant</h3>
+                    <p>Smoked chicken, romain lettuce, smoked paprika jam, red onion & Emmental cheese (rasa)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Double Cheese and Hamm-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="sandwiches" onclick="handleClick('Double Cheese and Ham')">
+            <a href="#" class="no-link">
+                <img src="img/sandwich/doublecheeseandham.jpg" alt="Double Cheese and Ham">
+                <div class="category-info">
+                    <h3>Double Cheese and Ham</h3>
+                    <p>Cheese croissant, melted Emmental cheese, beef ham, fresh tomato & salad. ADD BEEF BACON/HAM +20.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--The Monsieur Spoon Club Sandwich-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="monsier sandwiches" onclick="handleClick('The Monsieur Spoon Club Sandwich')">
+            <a href="#" class="no-link">
+                <img src="img/sandwich/themonsierspoonclubsandwhich.jpg" alt="The Monsieur Spoon Club Sandwich">
+                <div class="category-info">
+                    <h3>The Monsieur Spoon Club Sandwich | 75</h3>
+                    <p>White toast, rosemary chicken, creamy egg mayo, tomato, lettuce, mozzarella cheese, and aioli (rasa)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--French Dip Pulled Beef Baguette-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="keyword" onclick="handleClick('French Dip Pulled Beef Baguette')">
+            <a href="#" class="no-link">
+                <img src="img/sandwich/frenchdippulledbeefbaguette.jpg" alt="French Dip Pulled Beef Baguette">
+                <div class="category-info">
+                    <h3>French Dip Pulled Beef Baguette</h3>
+                    <p>deskripsi (rasa)</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+<!-- Chart Section -->
+<div id="chart-container">
+    <h2>Chart</h2>
+    <ul id="chart-list"></ul>
+    <textarea id="special-request" placeholder="Input special request here..."></textarea>
+    <div class="button-container">
+        <button class="button button-order" onclick="sendOrder()">Order</button>
+        <button class="button button-clear" onclick="clearChart()">Clear</button> <!-- Tombol Clear -->
+    </div>
+</div>
+
+
+
+    <!-- JavaScript -->
+        <script>
+        const chart = {};
+        const clickCounts = {};
+        const clickTimers = {};
+
+        function handleClick(menuName) {
+            if (!clickCounts[menuName]) {
+                clickCounts[menuName] = 0;
+            }
+
+            clickCounts[menuName] += 1;
+
+            clearTimeout(clickTimers[menuName]);
+
+            clickTimers[menuName] = setTimeout(() => {
+                if (clickCounts[menuName] === 2) {
+                    addToChart(menuName);
+                } else if (clickCounts[menuName] === 3) {
+                    removeFromChart(menuName);
+                }
+                clickCounts[menuName] = 0; // Reset click count
+            }, 300); // Adjust the delay (in milliseconds) as needed
+        }
+
+        function addToChart(menuName) {
+            if (!chart[menuName]) {
+                chart[menuName] = 0;
+            }
+            chart[menuName] += 1;
+            displayChart();
+
+            // Scroll ke bagian chart setelah item ditambahkan
+            const chartContainer = document.getElementById('chart-container');
+            chartContainer.scrollIntoView({ behavior: 'smooth' });
+        }
+
+        function removeFromChart(menuName) {
+            if (chart[menuName]) {
+                chart[menuName] -= 1;
+                if (chart[menuName] === 0) {
+                    delete chart[menuName];
+                }
+                displayChart();
+                alert(`${menuName} telah di kurangi dari pesanan.`);
+            }
+        }
+
+        function displayChart() {
+            const chartList = document.getElementById('chart-list');
+            chartList.innerHTML = '';
+            for (const [menuName, quantity] of Object.entries(chart)) {
+                const li = document.createElement('li');
+                li.innerHTML = `
+                    <div class="chart-item">
+                        <span class="menu-name">${menuName} x${quantity}</span>
+                        <div class="quantity-controls">
+                            <button onclick="increaseQuantity('${menuName}')">+</button> 
+                            <button onclick="decreaseQuantity('${menuName}')">-</button>
+                        </div>
+                    </div>
+                `;
+                chartList.appendChild(li);
+            }
+        }
+
+        function increaseQuantity(menuName) {
+            if (chart[menuName]) {
+                chart[menuName] += 1;
+                displayChart();
+            }
+        }
+
+        function decreaseQuantity(menuName) {
+            if (chart[menuName]) {
+                chart[menuName] -= 1;
+                if (chart[menuName] === 0) {
+                    delete chart[menuName];
+                }
+                displayChart();
+            }
+        }
+
+        async function sendOrder() {
+            const orderItems = Object.entries(chart).map(([menuName, quantity]) => {
+                return quantity > 1 ? `${menuName} x${quantity}` : menuName;
+            });
+            const specialRequest = document.getElementById('special-request').value.trim();
+            const orderMessage = `Your Order: ${orderItems.join(', ')}${specialRequest ? ' - Special Request / addons: ' + specialRequest : ''}`;
+
+            // Copy the order message to the clipboard
+            try {
+                await navigator.clipboard.writeText(orderMessage);
+                alert('Order telah disalin ke clipboard. Mengarahkan ke WhatsApp...');
+                
+                // Redirect to WhatsApp with the message
+                const encodedMessage = encodeURIComponent(orderMessage);
+                window.location.href = `https://wa.me/6285172352402?text=${encodedMessage}`;
+            } catch (err) {
+                alert('Gagal menyalin ke clipboard. Silakan coba lagi.');
+            }
+        }
+
+        window.addEventListener('beforeunload', function (e) {
+            if (Object.keys(chart).length > 0) {
+                const orderItems = Object.entries(chart).map(([menuName, quantity]) => {
+                    return quantity > 1 ? `${menuName} x${quantity}` : menuName;
+                });
+                const orderMessage = `Order Anda sebelum meninggalkan halaman ini: ${orderItems.join(', ')}`;
+                
+                // Copy the order message to the clipboard
+                navigator.clipboard.writeText(orderMessage).then(() => {
+                    alert(orderMessage);
+                }).catch(err => {
+                    alert('Gagal menyalin order ke clipboard.');
+                });
+
+                const confirmationMessage = "Apakah Anda yakin ingin meninggalkan halaman ini?";
+                e.returnValue = confirmationMessage;
+                return confirmationMessage;
+            }
+        });
+
+        function toggleSearchBox() {
+            const searchBox = document.getElementById('search-box');
+            searchBox.style.display = searchBox.style.display === 'block' ? 'none' : 'block';
+        }
+
+        function searchMenu() {
+            const input = document.getElementById('search-input').value.toLowerCase();
+            const menuItems = document.getElementsByClassName('category-item');
+
+            for (let i = 0; i < menuItems.length; i++) {
+                const item = menuItems[i];
+                const title = item.querySelector('.category-info h3').textContent.toLowerCase();
+                const categories = item.getAttribute('data-category').toLowerCase();
+
+                // Tampilkan item jika pencarian sesuai dengan judul atau salah satu kategori
+                if (title.includes(input) || categories.includes(input)) {
+                    item.style.display = '';
+                } else {
+                    item.style.display = 'none';
+                }
+            }
+        }
+
+        function clearChart() {
+            const confirmation = confirm('Apakah kamu yakin ingin menghapus semua menu dari chart?');
+            if (confirmation) {
+                for (const menuName in chart) {
+                    delete chart[menuName];
+                }
+                displayChart();
+            }
+        }
+    </script>
+</body>
+</html>
