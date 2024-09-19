@@ -379,135 +379,152 @@
     height: 70%;
 }
 
-.containerss {
-            display: grid;
-            grid-template-columns: repeat(2, 1fr); /* Membuat 2 kolom untuk setiap tabel */
-            gap: 10px; /* Jarak antar tabel */
-            padding-left: 20px;
-            padding-right: 20px;
-            padding-top: 20px;
-            padding-bottom: 150px;
+        </style>
+
+    <style>
+        .containerss {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            padding: 20px;
+            padding-bottom: 180px;
         }
 
-.table {
-            background-color: #4d3a2d; /* Warna coklat seperti pada gambar */
-            color: white;
-            border-radius: 11px;
-            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Menambah efek bayangan */
-            text-align: center;
-            position: relative;
-            height: 100px;
+        .table {
+            width: 75px;
+            height: 75px;
             display: flex;
-            justify-content: center;
             align-items: center;
-            cursor: pointer; /* Tunjukkan bahwa tabel bisa diklik */
+            justify-content: center;
+            background-color: #4d3a2d;
+            color: white;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
         }
+
         .table-number {
             font-size: 24px;
             font-weight: bold;
         }
-        @media (min-width: 768px) {
-            .container {
-                grid-template-columns: repeat(4, 1fr); /* Untuk layar lebih besar, menampilkan 4 tabel per baris */
-            }
+
+        .section-title {
+            width: 100%;
+            text-align: center;
+            font-size: 18px;
+            font-weight: bold;
+            margin: 20px 0;
         }
+    </style>
+</head>
+<body>
+    <div class="containerss">
+        <div class="section-title">Indoor (Section A)</div>
+        <div class="table" data-table="001"><div class="table-number">001</div></div>
+        <div class="table" data-table="002"><div class="table-number">002</div></div>
+        <div class="table" data-table="003"><div class="table-number">003</div></div>
+        <h4>|</h4>
+        <div class="table" data-table="004"><div class="table-number">004</div></div>
+        <div class="table" data-table="005"><div class="table-number">005</div></div>
+        <div class="table" data-table="006"><div class="table-number">006</div></div>
+        <div class="table" data-table="007"><div class="table-number">007</div></div>
+        <h4>|</h4>
+        <div class="table" data-table="008"><div class="table-number">008</div></div>
+        <div class="table" data-table="009"><div class="table-number">009</div></div>
+        <div class="table" data-table="0010"><div class="table-number">010</div></div>
 
-        </style>
+        <div class="section-title">Outdoor (Section B)</div>
+        <div class="table" data-table="0011"><div class="table-number">011</div></div>
+        <div class="table" data-table="012"><div class="table-number">012</div></div>
+        <!-- <div class="table" data-table="013"><div class="table-number">013</div></div> -->
+        <div class="table" data-table="014"><div class="table-number">014</div></div>
+        <div class="table" data-table="015"><div class="table-number">015</div></div>
+        <h4>|</h4>
+        <div class="table" data-table="016"><div class="table-number">016</div></div>
+        <div class="table" data-table="017"><div class="table-number">017</div></div>
+        <div class="table" data-table="018"><div class="table-number">018</div></div>
+        <div class="table" data-table="019"><div class="table-number">019</div></div>
+        <div class="table" data-table="020"><div class="table-number">020</div></div>
+        <div class="table" data-table="021"><div class="table-number">021</div></div>
+        <div class="table" data-table="022"><div class="table-number">022</div></div>
+        <div class="table" data-table="023"><div class="table-number">023</div></div>
+        <div class="table" data-table="024"><div class="table-number">024</div></div>
+        <div class="table" data-table="025"><div class="table-number">025</div></div>
+        <div class="table" data-table="026"><div class="table-number">026</div></div>
+        <div class="table" data-table="027"><div class="table-number">027</div></div>
+        <div class="table" data-table="028"><div class="table-number">028</div></div>
+        <div class="table" data-table="029"><div class="table-number">029</div></div>
+        <div class="table" data-table="030"><div class="table-number">030</div></div>
 
-<div class="containerss">
-    <!-- Tabel dengan nomor meja dari 1 hingga 90 -->
-    <div class="table" data-table="001"><div class="table-number">001</div></div>
-    <div class="table" data-table="002"><div class="table-number">002</div></div>
-    <div class="table" data-table="003"><div class="table-number">003</div></div>
-    <div class="table" data-table="004"><div class="table-number">004</div></div>
-    <div class="table" data-table="005"><div class="table-number">005</div></div>
-    <div class="table" data-table="006"><div class="table-number">006</div></div>
-    <div class="table" data-table="007"><div class="table-number">007</div></div>
-    <div class="table" data-table="008"><div class="table-number">008</div></div>
-    <div class="table" data-table="009"><div class="table-number">009</div></div>
-    <div class="table" data-table="0010"><div class="table-number">010</div></div>
-    <div class="table" data-table="0011"><div class="table-number">011</div></div>
-    <div class="table" data-table="012"><div class="table-number">012</div></div>
-    <div class="table" data-table="013"><div class="table-number">013</div></div>
-    <div class="table" data-table="014"><div class="table-number">014</div></div>
-    <div class="table" data-table="015"><div class="table-number">015</div></div>
-    <div class="table" data-table="016"><div class="table-number">016</div></div>
-    <div class="table" data-table="017"><div class="table-number">017</div></div>
-    <div class="table" data-table="018"><div class="table-number">018</div></div>
-    <div class="table" data-table="019"><div class="table-number">019</div></div>
-    <div class="table" data-table="020"><div class="table-number">020</div></div>
-    <div class="table" data-table="021"><div class="table-number">021</div></div>
-    <div class="table" data-table="022"><div class="table-number">022</div></div>
-    <div class="table" data-table="023"><div class="table-number">023</div></div>
-    <div class="table" data-table="024"><div class="table-number">024</div></div>
-    <div class="table" data-table="025"><div class="table-number">025</div></div>
-    <div class="table" data-table="026"><div class="table-number">026</div></div>
-    <div class="table" data-table="027"><div class="table-number">027</div></div>
-    <div class="table" data-table="028"><div class="table-number">028</div></div>
-    <div class="table" data-table="029"><div class="table-number">029</div></div>
-    <div class="table" data-table="030"><div class="table-number">030</div></div>
-    <div class="table" data-table="031"><div class="table-number">031</div></div>
-    <div class="table" data-table="032"><div class="table-number">032</div></div>
-    <div class="table" data-table="033"><div class="table-number">033</div></div>
-    <div class="table" data-table="034"><div class="table-number">034</div></div>
-    <div class="table" data-table="035"><div class="table-number">035</div></div>
-    <div class="table" data-table="036"><div class="table-number">036</div></div>
-    <div class="table" data-table="037"><div class="table-number">037</div></div>
-    <div class="table" data-table="038"><div class="table-number">038</div></div>
-    <div class="table" data-table="039"><div class="table-number">039</div></div>
-    <div class="table" data-table="040"><div class="table-number">040</div></div>
-    <div class="table" data-table="041"><div class="table-number">041</div></div>
-    <div class="table" data-table="042"><div class="table-number">042</div></div>
-    <div class="table" data-table="043"><div class="table-number">043</div></div>
-    <div class="table" data-table="044"><div class="table-number">044</div></div>
-    <div class="table" data-table="045"><div class="table-number">045</div></div>
-    <div class="table" data-table="046"><div class="table-number">046</div></div>
-    <div class="table" data-table="047"><div class="table-number">047</div></div>
-    <div class="table" data-table="048"><div class="table-number">048</div></div>
-    <div class="table" data-table="049"><div class="table-number">049</div></div>
-    <div class="table" data-table="050"><div class="table-number">050</div></div>
-    <div class="table" data-table="051"><div class="table-number">051</div></div>
-    <div class="table" data-table="052"><div class="table-number">052</div></div>
-    <div class="table" data-table="053"><div class="table-number">053</div></div>
-    <div class="table" data-table="054"><div class="table-number">054</div></div>
-    <div class="table" data-table="055"><div class="table-number">055</div></div>
-    <div class="table" data-table="056"><div class="table-number">056</div></div>
-    <div class="table" data-table="057"><div class="table-number">057</div></div>
-    <div class="table" data-table="058"><div class="table-number">058</div></div>
-    <div class="table" data-table="059"><div class="table-number">059</div></div>
-    <div class="table" data-table="060"><div class="table-number">060</div></div>
-    <div class="table" data-table="061"><div class="table-number">061</div></div>
-    <div class="table" data-table="062"><div class="table-number">062</div></div>
-    <div class="table" data-table="063"><div class="table-number">063</div></div>
-    <div class="table" data-table="064"><div class="table-number">064</div></div>
-    <div class="table" data-table="065"><div class="table-number">065</div></div>
-    <div class="table" data-table="066"><div class="table-number">066</div></div>
-    <div class="table" data-table="067"><div class="table-number">067</div></div>
-    <div class="table" data-table="068"><div class="table-number">068</div></div>
-    <div class="table" data-table="069"><div class="table-number">069</div></div>
-    <div class="table" data-table="070"><div class="table-number">070</div></div>
-    <div class="table" data-table="071"><div class="table-number">071</div></div>
-    <div class="table" data-table="072"><div class="table-number">072</div></div>
-    <div class="table" data-table="073"><div class="table-number">073</div></div>
-    <div class="table" data-table="074"><div class="table-number">074</div></div>
-    <div class="table" data-table="075"><div class="table-number">075</div></div>
-    <div class="table" data-table="076"><div class="table-number">076</div></div>
-    <div class="table" data-table="077"><div class="table-number">077</div></div>
-    <div class="table" data-table="078"><div class="table-number">078</div></div>
-    <div class="table" data-table="079"><div class="table-number">079</div></div>
-    <div class="table" data-table="080"><div class="table-number">080</div></div>
-    <div class="table" data-table="081"><div class="table-number">081</div></div>
-    <div class="table" data-table="082"><div class="table-number">082</div></div>
-    <div class="table" data-table="083"><div class="table-number">083</div></div>
-    <div class="table" data-table="084"><div class="table-number">084</div></div>
-    <div class="table" data-table="085"><div class="table-number">085</div></div>
-    <div class="table" data-table="086"><div class="table-number">086</div></div>
-    <div class="table" data-table="087"><div class="table-number">087</div></div>
-    <div class="table" data-table="088"><div class="table-number">088</div></div>
-    <div class="table" data-table="089"><div class="table-number">089</div></div>
-    <div class="table" data-table="090"><div class="table-number">090</div></div>
-    <!-- Tambahkan tabel lainnya sesuai dengan kebutuhan -->
-</div>
+        <div class="section-title">Indoor (Section C)</div>
+        <div class="table" data-table="031"><div class="table-number">031</div></div>
+        <h4>|</h4>
+        <div class="table" data-table="032"><div class="table-number">032</div></div>
+        <div class="table" data-table="033"><div class="table-number">033</div></div>
+        <div class="table" data-table="034"><div class="table-number">034</div></div>
+        <div class="table" data-table="035"><div class="table-number">035</div></div>
+        <h4>|</h4>
+        <div class="table" data-table="036"><div class="table-number">036</div></div>
+        <div class="table" data-table="037"><div class="table-number">037</div></div>
+        <div class="table" data-table="038"><div class="table-number">038</div></div>
+        <div class="table" data-table="039"><div class="table-number">039</div></div>
+        <div class="table" data-table="040"><div class="table-number">040</div></div>
+        <div class="table" data-table="041"><div class="table-number">041</div></div>
+        <div class="table" data-table="042"><div class="table-number">042</div></div>
+        <div class="table" data-table="043"><div class="table-number">043</div></div>
+
+        <!-- <div class="table" data-table="044"><div class="table-number">044</div></div>
+        <div class="table" data-table="045"><div class="table-number">045</div></div>
+        <div class="table" data-table="046"><div class="table-number">046</div></div>
+        <div class="table" data-table="047"><div class="table-number">047</div></div>
+        <div class="table" data-table="048"><div class="table-number">048</div></div>
+        <div class="table" data-table="049"><div class="table-number">049</div></div>
+        <div class="table" data-table="050"><div class="table-number">050</div></div>
+        <div class="table" data-table="051"><div class="table-number">051</div></div>
+        <div class="table" data-table="052"><div class="table-number">052</div></div>
+        <div class="table" data-table="053"><div class="table-number">053</div></div>
+        <div class="table" data-table="054"><div class="table-number">054</div></div>
+        <div class="table" data-table="055"><div class="table-number">055</div></div>
+        <div class="table" data-table="056"><div class="table-number">056</div></div>
+        <div class="table" data-table="057"><div class="table-number">057</div></div>
+        <div class="table" data-table="058"><div class="table-number">058</div></div>
+        <div class="table" data-table="059"><div class="table-number">059</div></div>
+        <div class="table" data-table="060"><div class="table-number">060</div></div> -->
+
+        <div class="section-title">Outdoor (Section D)</div>
+        <div class="table" data-table="061"><div class="table-number">061</div></div>
+        <div class="table" data-table="062"><div class="table-number">062</div></div>
+        <div class="table" data-table="063"><div class="table-number">063</div></div>
+        <div class="table" data-table="064"><div class="table-number">064</div></div>
+        <div class="table" data-table="065"><div class="table-number">065</div></div>
+        <div class="table" data-table="066"><div class="table-number">066</div></div>
+        <div class="table" data-table="067"><div class="table-number">067</div></div>
+        <div class="table" data-table="068"><div class="table-number">068</div></div>
+        <div class="table" data-table="069"><div class="table-number">069</div></div>
+        <div class="table" data-table="070"><div class="table-number">070</div></div>
+        <div class="table" data-table="071"><div class="table-number">071</div></div>
+        <div class="table" data-table="072"><div class="table-number">072</div></div>
+        <div class="table" data-table="073"><div class="table-number">073</div></div>
+        <div class="table" data-table="074"><div class="table-number">074</div></div>
+        <div class="table" data-table="075"><div class="table-number">075</div></div>
+        <div class="table" data-table="076"><div class="table-number">076</div></div>
+        <div class="table" data-table="077"><div class="table-number">077</div></div>
+        <div class="table" data-table="078"><div class="table-number">078</div></div>
+        <div class="table" data-table="079"><div class="table-number">079</div></div>
+        <div class="table" data-table="080"><div class="table-number">080</div></div>
+        <div class="table" data-table="081"><div class="table-number">081</div></div>
+        <div class="table" data-table="082"><div class="table-number">082</div></div>
+        <div class="table" data-table="083"><div class="table-number">083</div></div>
+        <div class="table" data-table="084"><div class="table-number">084</div></div>
+        <div class="table" data-table="085"><div class="table-number">085</div></div>
+        <div class="table" data-table="086"><div class="table-number">086</div></div>
+        <div class="table" data-table="087"><div class="table-number">087</div></div>
+        <div class="table" data-table="088"><div class="table-number">088</div></div>
+        <div class="table" data-table="089"><div class="table-number">089</div></div>
+        <div class="table" data-table="090"><div class="table-number">090</div></div>
+        <!-- Tabel outdoor Lt 2 dapat ditambahkan di sini jika ada -->
+    </div>
 
     
     <div class="judul">
