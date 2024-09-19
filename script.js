@@ -426,9 +426,9 @@ function addToChart(menuName, element) {
 
     // Periksa apakah menu memerlukan opsi suhu sebelum ditambahkan ke chart
     if (menusWithTemperatureOptions.includes(menuName)) {
-        let temperature = prompt('Pilih Varian: Hot atau Ice (Ketik Hot / Ice).');
+        let temperature = prompt('Pilih Varian: Hot atau Ice (Type Hot / Ice).');
         if (!temperature || (temperature.toLowerCase() !== 'hot' && temperature.toLowerCase() !== 'ice')) {
-            alert('Silakan pilih antara "Hot" atau "Iced".'); // Validasi input suhu
+            alert('Silakan pilih antara "Hot" atau "Ice".'); // Validasi input suhu
             return; // Kembali jika input tidak valid
         }
         // Format nama menu berdasarkan pilihan suhu
