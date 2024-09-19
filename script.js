@@ -565,7 +565,7 @@ async function sendOrder() {
     let specialRequest = document.getElementById('special-request').value.trim();
 
     // Daftar kata kunci yang menunjukkan nomor meja harus dihilangkan
-    const removeTableKeywords = ["T.", "T ", "t.", "t ", "table", "Table", "Tabble", "Meja", "meja"];
+    const removeTableKeywords = ["T.", "T ", "t.", "t ", "tkwy", "TA", "ta", "takeaway", "Takeaway", "Take away", "take away","table", "Table", "Tabble", "Meja", "meja"];
     
     // Cek jika specialRequest mengandung salah satu kata kunci di removeTableKeywords
     const shouldRemoveTable = removeTableKeywords.some(keyword => specialRequest.includes(keyword));
@@ -857,3 +857,11 @@ document.querySelectorAll('.table').forEach(table => {
     });
 });
 
+document.querySelectorAll('.table').forEach(table => {
+    table.addEventListener('dblclick', function() {
+        // Menghapus class 'highlight' dari semua table
+        document.querySelectorAll('.table').forEach(t => t.classList.remove('highlight'));
+        // Menambahkan class 'highlight' pada table yang diklik
+        this.classList.add('highlight');
+    });
+});
