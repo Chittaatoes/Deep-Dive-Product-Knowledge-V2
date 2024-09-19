@@ -565,7 +565,7 @@ async function sendOrder() {
     let specialRequest = document.getElementById('special-request').value.trim();
 
     // Daftar kata kunci yang menunjukkan nomor meja harus dihilangkan
-    const removeTableKeywords = ["T.", "t.", "table", "Table", "Tabble", "Meja", "meja"];
+    const removeTableKeywords = ["T.", "T ", "t.", "t ", "table", "Table", "Tabble", "Meja", "meja"];
     
     // Cek jika specialRequest mengandung salah satu kata kunci di removeTableKeywords
     const shouldRemoveTable = removeTableKeywords.some(keyword => specialRequest.includes(keyword));
@@ -575,7 +575,12 @@ async function sendOrder() {
         alert('Nomor meja dihilangkan. Lihat NOTE.');
     }
 
-    const orderMessage = `${tableNumber ? `TABLE: ${tableNumber}\n` : ''}Pesanan: ${orderItems.join(', ')}${specialRequest ? ' - NOTE: ' + specialRequest : ''}`;
+    // Format pesan dengan setiap item pada baris baru
+    const orderMessage = `
+${tableNumber ? `TABLE: ${tableNumber}\n` : ''}
+Order:
+${orderItems.join('\n')}
+${specialRequest ? `\nNOTE: ${specialRequest}` : ''}`.trim(); // Trim to remove any leading/trailing whitespace
 
     // Copy the order message to the clipboard
     try {
@@ -589,6 +594,7 @@ async function sendOrder() {
         alert('Gagal menyalin ke clipboard. Silakan coba lagi.');
     }
 }
+
 
 
 
