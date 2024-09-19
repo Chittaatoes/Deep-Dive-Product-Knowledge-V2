@@ -17,7 +17,7 @@
 /* Optional: Limit the height of the table section and enable scrolling within it */
 .containerss {
   margin-top: 0px;
-  margin-bottom: 100px;
+  margin-bottom: 10px;
   /* padding-top: 130px;
   padding-bottom: 130px; */
   max-height: 100vh; /* Set to viewport height */
