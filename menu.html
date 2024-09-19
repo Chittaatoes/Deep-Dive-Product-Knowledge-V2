@@ -1,0 +1,2749 @@
+<!DOCTYPE html>
+<html lang="id">
+    <head>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <title>Food Menu</title>
+        <link rel="stylesheet" href="styles.css">
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/html5-qrcode/2.3.4/html5-qrcode.min.js" integrity="sha512-k/KAe4Yff9EUdYI5/IAHlwUswqeipP+Cp5qnrsUjTPCgl51La2/JhyyjNciztD7mWNKLSXci48m7cctATKfLlQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+        <style>
+            /* General reset and mobile-friendly styles */
+            body, html {
+                margin: 0;
+                padding: 0;
+                box-sizing: border-box;
+                font-family: Arial, sans-serif;
+            }
+            
+            #reader {
+            width: 600px;
+            }
+            #result {
+                text-align: center;
+                font-size: 1.5rem;
+            }
+    
+            /* Ensure header and elements are responsive */
+            .site-header {
+                background-color: #fff;
+                padding: 10px 20px;
+                border-bottom: 1px solid #ddd;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+                box-shadow: 0 2px 4px rgba(0,0,0,0.1);
+                position: sticky; /* Keeps header at the top */
+                top: 0;
+                z-index: 1000;
+            }
+    
+            .logo img {
+                height: 40px;
+            }
+    
+            .main-nav ul {
+                list-style: none;
+                margin: 0;
+                padding: 0;
+                display: flex;
+                flex-wrap: wrap;
+            }
+    
+            .main-nav li {
+                margin: 0 15px;
+            }
+    
+            .main-nav a {
+                text-decoration: none;
+                color: #333;
+                font-weight: bold;
+                padding: 5px;
+            }
+    
+            .header-right a {
+                display: flex;
+                align-items: center;
+            }
+    
+            .header-right img {
+                height: 24px;
+            }
+    
+            /* Search box styling */
+            /* Search Box */
+/* Styling untuk search box */
+.search-box {
+    position: fixed;
+    top: 170px; /* Jarak dari header, sesuaikan dengan tinggi header ditambah sedikit ruang */
+    right: 20px;
+    background-color: #fff;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    display: flex;
+    align-items: center;
+    width: 300px; /* Sesuaikan dengan kebutuhan */
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2); /* Tambahkan bayangan untuk visibilitas lebih baik */
+}
+
+/* Styling untuk input di dalam search box */
+.search-box input {
+    border: none;
+    outline: none;
+    flex: 1;
+    padding: 5px;
+}
+
+/* Styling untuk tombol clear search */
+.clear-search {
+    background: none;
+    border: none;
+    font-size: 20px;
+    color: #666;
+    cursor: pointer;
+    margin-left: 10px;
+}
+
+/* Styling untuk tombol-tombol */
+.button {
+    padding: 10px 20px;
+    font-size: 16px;
+    border: none;
+    border-radius: 5px;
+    cursor: pointer;
+    margin-right: 10px;
+}
+
+.button-order {
+    background-color: #4CAF50;
+    color: white;
+}
+
+.button-clear {
+    background-color: #f44336;
+    color: white;
+}
+
+    
+            /* Chart Container */
+#chart-container {
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Efek 3D dengan bayangan */
+  max-width: 400px;
+  margin: 20px auto;
+  transition: transform 0.3s ease;
+}
+
+#chart-container:hover {
+  transform: translateY(-10px); /* Efek mengangkat saat di-hover */
+}
+
+#chart-container textarea {
+  width: 100%;
+  height: 150px; /* Atur tinggi textarea sesuai kebutuhan */
+  resize: vertical; /* Biarkan pengguna mengubah ukuran secara vertikal */
+  box-sizing: border-box; /* Memastikan padding dan border diperhitungkan dalam lebar dan tinggi */
+  margin: 10px 0; /* Tambahkan margin jika perlu */
+}
+
+
+/* Chart List */
+#chart-list {
+  list-style-type: none;
+  padding: 0;
+}
+
+#chart-list li {
+  background-color: #fff;
+  margin: 10px 0;
+  padding: 15px;
+  border-radius: 8px;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  font-size: 16px;
+  color: #333;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+#chart-list li:hover {
+  transform: translateY(-5px); /* Efek mengangkat sedikit saat di-hover */
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2); /* Tambahkan bayangan lebih besar saat di-hover */
+}
+
+.chart-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 10px;
+}
+    
+            .quantity-controls button {
+                padding: 5px 10px;
+                margin: 0 5px;
+                border: none;
+                border-radius: 3px;
+                background-color: #eee;
+                cursor: pointer;
+            }
+    
+            textarea {
+                width: 100%;
+                padding: 10px;
+                font-size: 16px;
+                margin-top: 10px;
+                border: 1px solid #ccc;
+                border-radius: 5px;
+                box-sizing: border-box;
+            }
+    
+            .button-container {
+                display: flex;
+                justify-content: center;
+                margin-top: 20px;
+            }
+    
+            /* Media queries for better responsiveness */
+            @media (max-width: 600px) {
+                .main-nav ul {
+                    flex-direction: column;
+                    align-items: center;
+                }
+    
+                .main-nav li {
+                    margin: 5px 0;
+                }
+    
+                .header-right {
+                    display: none; /* Hide search icon on very small screens */
+                }
+    
+                .search-box {
+                    top: 60px; /* Adjust for small screens */
+                    right: 10px;
+                }
+    
+                .site-header {
+                    padding: 10px;
+                }
+            }
+            .footer {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            background-color: #ffffff;
+            display: flex;
+            justify-content: space-around;
+            align-items: center;
+            box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.1);
+            padding: 10px 0;
+            border-top: 1px solid #e0e0e0;
+            z-index: 1000;
+        }
+
+        .footer a {
+            flex: 1;
+            text-align: center;
+            text-decoration: none;
+            color: #555; /* Dark grey text color */
+            font-size: 12px;
+            transition: color 0.3s ease;
+        }
+
+        .footer a.active i {
+            filter: invert(36%) sepia(72%) saturate(509%) hue-rotate(331deg) brightness(93%) contrast(90%);
+        }
+
+        .footer a span {
+            display: block;
+            margin-top: 4px;
+            font-size: 11px;
+        }
+
+        .footer a i {
+            font-size: 22px;
+            filter: grayscale(100%); /* Default icon color (gray) */
+            transition: filter 0.3s ease;
+        }
+
+        /* Icons specific styles */
+        .footer a.home i {
+            background: url('img/footer/home-icon.png') no-repeat center;
+            background-size: contain;
+            width: 22px;
+            height: 22px;
+            display: inline-block;
+        }
+
+        .footer a.promo i {
+            background: url('img/footer/promo.png') no-repeat center;
+            background-size: contain;
+            width: 22px;
+            height: 22px;
+            display: inline-block;
+        }
+
+        .footer a.aktivitas i {
+            background: url('img/footer/activity.png') no-repeat center;
+            background-size: contain;
+            width: 22px;
+            height: 22px;
+            display: inline-block;
+        }
+
+        .footer a.chat i {
+            background: url('img/footer/menu.png') no-repeat center;
+            background-size: contain;
+            width: 22px;
+            height: 22px;
+            display: inline-block;
+        }
+        </style>
+    </head>
+    
+    <body>
+        <!-- Loading Screen -->
+<div id="loading-screen" class="loading-screen">
+    <div class="spinner"></div>
+</div>
+
+<!-- Konten utama halaman -->
+<div id="main-content" style="display: none;">
+    <!-- Konten halaman Anda di sini -->
+</div>
+
+        <header class="site-header">
+            <div class="logo">
+                <a href="#">
+                    <img src="img/logo.png" id="menu-link1" alt="Monsier Spoon">
+                </a>
+            </div>
+            <nav class="main-nav">
+                <ul>
+                    <li><a href="#" id="menu-link2">MENU</a></li>
+                </ul>
+            </nav>
+            <!-- Konten header lainnya -->
+        </header>
+<!-- Pembatas Header -->
+
+<body>
+
+<!-- Popup Notifikasi -->
+<div id="notification-popup" class="notification-popup">
+    <div class="notification-content">
+        <p>
+            Tap sekali untuk melihat detail,<br>
+            <span class="highlight">Tap 2x untuk menambahkan ke chart</span>
+        </p>
+        <button id="notification-close" class="notification-close">(CLOSE)</button>
+    </div>
+</div>
+
+     <!-- Search Box -->
+     <div id="searchBox" class="search-box">
+        <input type="text" id="search-input" placeholder="Search menu..." onkeyup="searchMenu()">
+        <button id="clear-search" class="clear-search">&times;</button>
+    </div>
+
+    <!-- Tambahkan ini di dalam <body> -->
+        <div id="floating-search-button" class="floating-search-button" onclick="toggleSearchBox()">
+            <img src="img/search-icon.png" alt="Search">
+        </div>
+        
+        <style>
+            /* Floating Search Button */
+.floating-search-button {
+    position: fixed;
+    bottom: 220px;
+    right: 20px;
+    width: 50px;
+    height: 50px;
+    background-color: #f7f7f71f; /* Warna latar belakang tombol */
+    border-radius: 50%;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+    z-index: 1000;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    touch-action: none; /* Menonaktifkan gesekan default pada layar sentuh */
+}
+
+.floating-search-button img {
+    width: 70%;
+    height: 70%;
+}
+
+.containerss {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr); /* Membuat 2 kolom untuk setiap tabel */
+            gap: 10px; /* Jarak antar tabel */
+            padding-left: 20px;
+            padding-right: 20px;
+            padding-top: 20px;
+            padding-bottom: 150px;
+        }
+
+.table {
+            background-color: #4d3a2d; /* Warna coklat seperti pada gambar */
+            color: white;
+            border-radius: 11px;
+            box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.2); /* Menambah efek bayangan */
+            text-align: center;
+            position: relative;
+            height: 100px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            cursor: pointer; /* Tunjukkan bahwa tabel bisa diklik */
+        }
+        .table-number {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        @media (min-width: 768px) {
+            .container {
+                grid-template-columns: repeat(4, 1fr); /* Untuk layar lebih besar, menampilkan 4 tabel per baris */
+            }
+        }
+
+        </style>
+
+<div class="containerss">
+    <!-- Tabel dengan nomor meja dari 1 hingga 90 -->
+    <div class="table" data-table="001"><div class="table-number">001</div></div>
+    <div class="table" data-table="002"><div class="table-number">002</div></div>
+    <div class="table" data-table="003"><div class="table-number">003</div></div>
+    <div class="table" data-table="004"><div class="table-number">004</div></div>
+    <div class="table" data-table="005"><div class="table-number">005</div></div>
+    <div class="table" data-table="006"><div class="table-number">006</div></div>
+    <div class="table" data-table="007"><div class="table-number">007</div></div>
+    <div class="table" data-table="008"><div class="table-number">008</div></div>
+    <div class="table" data-table="009"><div class="table-number">009</div></div>
+    <div class="table" data-table="0010"><div class="table-number">010</div></div>
+    <div class="table" data-table="0011"><div class="table-number">011</div></div>
+    <div class="table" data-table="012"><div class="table-number">012</div></div>
+    <div class="table" data-table="013"><div class="table-number">013</div></div>
+    <div class="table" data-table="014"><div class="table-number">014</div></div>
+    <div class="table" data-table="015"><div class="table-number">015</div></div>
+    <div class="table" data-table="016"><div class="table-number">016</div></div>
+    <div class="table" data-table="017"><div class="table-number">017</div></div>
+    <div class="table" data-table="018"><div class="table-number">018</div></div>
+    <div class="table" data-table="019"><div class="table-number">019</div></div>
+    <div class="table" data-table="020"><div class="table-number">020</div></div>
+    <div class="table" data-table="021"><div class="table-number">021</div></div>
+    <div class="table" data-table="022"><div class="table-number">022</div></div>
+    <div class="table" data-table="023"><div class="table-number">023</div></div>
+    <div class="table" data-table="024"><div class="table-number">024</div></div>
+    <div class="table" data-table="025"><div class="table-number">025</div></div>
+    <div class="table" data-table="026"><div class="table-number">026</div></div>
+    <div class="table" data-table="027"><div class="table-number">027</div></div>
+    <div class="table" data-table="028"><div class="table-number">028</div></div>
+    <div class="table" data-table="029"><div class="table-number">029</div></div>
+    <div class="table" data-table="030"><div class="table-number">030</div></div>
+    <div class="table" data-table="031"><div class="table-number">031</div></div>
+    <div class="table" data-table="032"><div class="table-number">032</div></div>
+    <div class="table" data-table="033"><div class="table-number">033</div></div>
+    <div class="table" data-table="034"><div class="table-number">034</div></div>
+    <div class="table" data-table="035"><div class="table-number">035</div></div>
+    <div class="table" data-table="036"><div class="table-number">036</div></div>
+    <div class="table" data-table="037"><div class="table-number">037</div></div>
+    <div class="table" data-table="038"><div class="table-number">038</div></div>
+    <div class="table" data-table="039"><div class="table-number">039</div></div>
+    <div class="table" data-table="040"><div class="table-number">040</div></div>
+    <div class="table" data-table="041"><div class="table-number">041</div></div>
+    <div class="table" data-table="042"><div class="table-number">042</div></div>
+    <div class="table" data-table="043"><div class="table-number">043</div></div>
+    <div class="table" data-table="044"><div class="table-number">044</div></div>
+    <div class="table" data-table="045"><div class="table-number">045</div></div>
+    <div class="table" data-table="046"><div class="table-number">046</div></div>
+    <div class="table" data-table="047"><div class="table-number">047</div></div>
+    <div class="table" data-table="048"><div class="table-number">048</div></div>
+    <div class="table" data-table="049"><div class="table-number">049</div></div>
+    <div class="table" data-table="050"><div class="table-number">050</div></div>
+    <div class="table" data-table="051"><div class="table-number">051</div></div>
+    <div class="table" data-table="052"><div class="table-number">052</div></div>
+    <div class="table" data-table="053"><div class="table-number">053</div></div>
+    <div class="table" data-table="054"><div class="table-number">054</div></div>
+    <div class="table" data-table="055"><div class="table-number">055</div></div>
+    <div class="table" data-table="056"><div class="table-number">056</div></div>
+    <div class="table" data-table="057"><div class="table-number">057</div></div>
+    <div class="table" data-table="058"><div class="table-number">058</div></div>
+    <div class="table" data-table="059"><div class="table-number">059</div></div>
+    <div class="table" data-table="060"><div class="table-number">060</div></div>
+    <div class="table" data-table="061"><div class="table-number">061</div></div>
+    <div class="table" data-table="062"><div class="table-number">062</div></div>
+    <div class="table" data-table="063"><div class="table-number">063</div></div>
+    <div class="table" data-table="064"><div class="table-number">064</div></div>
+    <div class="table" data-table="065"><div class="table-number">065</div></div>
+    <div class="table" data-table="066"><div class="table-number">066</div></div>
+    <div class="table" data-table="067"><div class="table-number">067</div></div>
+    <div class="table" data-table="068"><div class="table-number">068</div></div>
+    <div class="table" data-table="069"><div class="table-number">069</div></div>
+    <div class="table" data-table="070"><div class="table-number">070</div></div>
+    <div class="table" data-table="071"><div class="table-number">071</div></div>
+    <div class="table" data-table="072"><div class="table-number">072</div></div>
+    <div class="table" data-table="073"><div class="table-number">073</div></div>
+    <div class="table" data-table="074"><div class="table-number">074</div></div>
+    <div class="table" data-table="075"><div class="table-number">075</div></div>
+    <div class="table" data-table="076"><div class="table-number">076</div></div>
+    <div class="table" data-table="077"><div class="table-number">077</div></div>
+    <div class="table" data-table="078"><div class="table-number">078</div></div>
+    <div class="table" data-table="079"><div class="table-number">079</div></div>
+    <div class="table" data-table="080"><div class="table-number">080</div></div>
+    <div class="table" data-table="081"><div class="table-number">081</div></div>
+    <div class="table" data-table="082"><div class="table-number">082</div></div>
+    <div class="table" data-table="083"><div class="table-number">083</div></div>
+    <div class="table" data-table="084"><div class="table-number">084</div></div>
+    <div class="table" data-table="085"><div class="table-number">085</div></div>
+    <div class="table" data-table="086"><div class="table-number">086</div></div>
+    <div class="table" data-table="087"><div class="table-number">087</div></div>
+    <div class="table" data-table="088"><div class="table-number">088</div></div>
+    <div class="table" data-table="089"><div class="table-number">089</div></div>
+    <div class="table" data-table="090"><div class="table-number">090</div></div>
+    <!-- Tambahkan tabel lainnya sesuai dengan kebutuhan -->
+</div>
+
+    
+    <div class="judul">
+        <div class="container">
+            <div class="kategori-header">
+                <h2>Pilih Kategori Menu</h2>
+            </div>
+        </div>
+    </div>
+        
+        <div class="slider-wrapper">
+            <div class="kategori-item" data-target="brunch">Brunch</div>
+            <div class="kategori-item" data-target="sandwich">Sandwiches</div>
+            <div class="kategori-item" data-target="salad">Salad</div>
+            <div class="kategori-item" data-target="soup">Soup</div>
+            <div class="kategori-item" data-target="entree">Entree</div>
+            <div class="kategori-item" data-target="side">Side</div>
+            <div class="kategori-item" data-target="pasta">Pasta</div>
+            <div class="kategori-item" data-target="mains">Mains</div>
+            <div class="kategori-item" data-target="rice">Rice</div>
+            <div class="kategori-item" data-target="deserts">Deserts</div>
+            <div class="kategori-item" data-target="viennoseries">Pastry</div>
+            <div class="kategori-item" data-target="drinks">Drinks</div>
+        </div>
+    
+
+        <!-- Menu Items -->
+
+        <!-- Contoh Menu yang hanya sebagai tampilan -->
+    <!-- <div class="menu-category-header" id="breakfast">
+        <h2>BREAKFAST PACKAGE</h2>
+    </div> -->
+
+    <!-- Item yang hanya untuk tampilan -->
+    <!-- <div class="menu-categories">
+        <div class="category-item" data-category="display">
+            <a href="#" class="no-link">
+                <img src="img/display/breakfast.jpg" alt="Display Item 1">
+                <div class="category-info">
+                    <h3>Beakfast Package</h3>
+                    <p>1 Menu + 1 Beverage (Hot Black tea / hot long black).</p>
+                </div>
+            </a>
+        </div>
+    </div> -->
+
+            <!-- Add more menu items similar to above structure -->
+            <!-- <div class="menu-categories">
+                <div class="category-item" data-category="breakfast best" onclick="handleClick('The OG Scrambled Egg', this)">
+                    <a href="#" class="no-link">
+                        <img src="img/breakfast/ogscrambledegg.jpg" alt="The OG Scrambled Egg">
+                        <div class="category-info">
+                            <h3>The OG Scrambled Egg</h3>
+                            <p>Scrambled egg with truffle oil, mushroom, beef bacon & roti sourdough</p>
+                        </div>
+                    </a>
+                </div>
+            </div> 
+            <div class="menu-categories">
+                <div class="category-item" data-category="breakfast bacon" onclick="handleClick('Breakfast Burger', this)">
+                    <a href="#" class="no-link">
+                        <img src="img/sandwich/breakfastburger.jpg" alt="Breakfast Burger">
+                        <div class="category-info">
+                            <h3>Breakfast Burger</h3>
+                            <p>Scrambled egg with truffle oil, mushroom, beef bacon & roti sourdough</p>
+                        </div>
+                    </a>
+                </div>
+            </div> 
+            <div class="menu-categories">
+                <div class="category-item" data-category="breakfast chicken" onclick="handleClick('Chicken Quesadilla', this)">
+                    <a href="#" class="no-link">
+                        <img src="img/breakfast/chickenqassadila.jpg" alt="Chicken Quesadilla">
+                        <div class="category-info">
+                            <h3>Chicken Quesadilla</h3>
+                            <p>Roti tortila with rosmery chicken and cheese</p>
+                        </div>
+                    </a>
+                </div>
+            </div> -->
+        
+    <div class="menu-category-header" id="brunch">
+        <h2>BRUNCH MENU</h2>
+    </div>
+
+        <!-- Add more menu items similar to above structure -->
+        <div class="menu-categories">
+            <div class="category-item" data-category="brunch healthy" onclick="handleClick('Super Healthy Bowl', this)">
+                <a href="#" class="no-link">
+                    <img src="img/brunch/healthybowls.jpg" alt="healthybowl">
+                    <div class="category-info">
+                        <h3>Super Healthy Bowl</h3>
+                        <p>Strawberry, banana, Granola, Coconut Flake & Goji Berry yg disajikan dengan dragon & Banana Smoothies (Fresh, Sweet & Soury)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!-- Basilico Prawn Croissant CUp -->
+        <div class="menu-categories">
+            <div class="category-item" data-category="brunch soury creamy best" onclick="handleClick('Basilico Prawn Croissant Cup', this)">
+                <a href="#" class="no-link">
+                    <img src="img/brunch/basilicoprawncroissantcup.jpg" alt="Basilico Prawn Croissant Cup">
+                    <div class="category-info">
+                        <h3>Basilico Prawn Croissant Cup</h3>
+                        <p>Croissant cup with pesto mayo & Prawn (Soury & Creamy)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Beef Bacon Egg On Toast-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="brunch sweet savoury best" onclick="handleClick('Beef Bacon Egg On Toast', this)">
+                <a href="#" class="no-link">
+                    <img src="img/brunch/beefbacon.jpg" alt="Beef Bacon Egg On Toast">
+                    <div class="category-info">
+                        <h3>Beef Bacon Egg On Toast</h3>
+                        <p>Multi bread yang disajikan dengan beef bacon onion caramelize & Egg (Sweet & Savoury)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Avocado Bruschetta-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="brunch salty soury" onclick="handleClick('Avocado Bruschetta', this)">
+                <a href="#" class="no-link">
+                    <img src="img/brunch/bruschetta.jpg" alt="Avocado Bruschetta">
+                    <div class="category-info">
+                        <h3>Avocado Bruschetta</h3>
+                        <p>Sourdough with topping mashed avocado & feta cheese (Salty  & Soury)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Croissant benedict-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="brunch creamy" onclick="handleClick('Croissant Benedict', this)">
+                <a href="#" class="no-link">
+                    <img src="img/brunch/benedict.jpg" alt="Croissant Benedict">
+                    <div class="category-info">
+                        <h3>Croissant Benedict</h3>
+                        <p>Croissant toast with beef mortadella yang di topping dengan poach egg & hollandaise sauce (Creamy)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Cheese & Tomato Croissant Cup-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="brunch umamy creamy soury" onclick="handleClick('Cheese & Tomato Croissant Cup', this)">
+                <a href="#" class="no-link">
+                    <img src="img/brunch/cheeseandtomatocroissantcup.jpg" alt="Cheese & Tomato Croissant Cup">
+                    <div class="category-info">
+                        <h3>Cheese & Tomato Croissant Cup</h3>
+                        <p>Croissant cup with basic parmesan cheese and tomato fondue mixed with red onion inside (Umamy, Creamy, Soury)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--French Toast-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="brunch sweet soury best" onclick="handleClick('French Toast', this)">
+                <a href="#" class="no-link">
+                    <img src="img/brunch/frenchtoast.jpg" alt="French Toast">
+                    <div class="category-info">
+                        <h3>French Toast</h3>
+                        <p>Roti brioche dengan topping fruit compoted & lemon mix (Sweet & Sour)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Smoked Salmon Egg on Toast-->
+    <!--     <div class="menu-categories">
+            <div class="category-item" data-category="brunch" onclick="handleClick('Smoked Salmon Egg on Toast', this)">
+                <a href="#" class="no-link">
+                    <img src="img/brunch/smokedsalmonandeggontoast.jpg" alt="Smoked Salmon Egg on Toast">
+                    <div class="category-info">
+                        <h3>Smoked Salmon & Egg on Toast</h3>
+                        <p>Roti()</p>
+                    </div>
+                </a>
+            </div>
+        </div> -->
+        <!--Quiche Lorraine-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="brunch salty savoury" onclick="handleClick('Quiche Lorraine', this)">
+                <a href="#" class="no-link">
+                    <img src="img/brunch/quiche.jpg" alt="Quiche Lorraine">
+                    <div class="category-info">
+                        <h3>Quiche Lorraine</h3>
+                        <p>Puff pastry dengan isi bacon yang disajikan dengan mix salad (Salty & Savoury)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Monsier Spoon Granola-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="brunch healthy fresh sweet soury" onclick="handleClick('Monsier Spoon Granola', this)">
+                <a href="#" class="no-link">
+                    <img src="img/brunch/granola.jpg" alt="Monsier SPoon Granola">
+                    <div class="category-info">
+                        <h3>Monsier Spoon Granola</h3>
+                        <p>Healthy food with mix fruit & peanut yang disajikan dengan yogurth (Sweet & SOury)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+
+
+    <!-- Pembatas Kategori Sandwiches -->
+    <div class="menu-category-header" id="sandwich">
+        <h2>SANDWICHES</h2>
+    </div>
+
+        <!-- Wagyu Signature -->
+        <div class="menu-categories">
+            <div class="category-item" data-category="croger burger sandwiches best" onclick="handleClick('Wagyu Signature', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sandwich/wagyusignature.jpg" alt="Wagyu Signature">
+                    <div class="category-info">
+                        <h3>Wagyu Signature</h3>
+                        <p>Wagyu beef patty, French scrambled eggs, onion, lettuce, cheddar cheese & BBQ sauce on house-made croger bun ()</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!-- Buttermilk Chicken -->
+        <div class="menu-categories">
+            <div class="category-item" data-category="croger burger tasty creamy crispy" onclick="handleClick('Buttermilk Chicken', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sandwich/buttermilkchicken.jpg" alt="Buttermilk Chicken">
+                    <div class="category-info">
+                        <h3>Buttermilk Chicken</h3>
+                        <p>Crispy buttermilk chicken with mozza cheese, caramelized onion, lettuce and aioli on house-made croger bun (Tasty, Creamy, Crispy outside)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Pulled Brisket & Egg-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="sandwiches croger burger tasty juicy savoury" onclick="handleClick('Pulled Brisket & Egg', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sandwich/pulledbrisketandegg.jpg" alt="Pulled Brisket & Egg">
+                    <div class="category-info">
+                        <h3>Pulled Brisket & Egg</h3>
+                        <p>Croger with pulled brisket, sunny side up egg, bega cheese & BBQ sauce (Tasty, Juicy, Savoury)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Tamago Katsu Mortadella-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="sandwiches croger burger savoury sour" onclick="handleClick('Tamago Katsu Mortadella', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sandwich/tamagokatsumortadella.jpg" alt="Tamago Katsu Mortadella">
+                    <div class="category-info">
+                        <h3>Tamago Katsu Mortadella</h3>
+                        <p>Tamago katsu, beef mortadella, tomato, iceberg & Japanese mayo on house-made croger bun (Savoury, Sour)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Truffle scrambled eggs-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="creamy salty" onclick="handleClick('Truffle Scrambled Eggs', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sandwich/truffle scrambled egg.jpg" alt="Truffle Scrambled Eggs">
+                    <div class="category-info">
+                        <h3>Truffle scrambled Eggs</h3>
+                        <p>Creamy french scrambled eggs, truffle oil, sauted mushrooms & porcini salt (Creamy & Salty)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Smoked Chicken Croissant-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="croissant best" onclick="handleClick('Smoked Chicken Croissant', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sandwich/Smoked Chicken Croissant.jpeg" alt="Smoked Chicken Croissant">
+                    <div class="category-info">
+                        <h3>Smoked Chicken Croissant</h3>
+                        <p>Smoked chicken, romain lettuce, smoked paprika jam, red onion & Emmental cheese (rasa)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Double Cheese and Hamm-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="sandwiches" onclick="handleClick('Double Cheese and Ham', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sandwich/doublecheeseandham.jpg" alt="Double Cheese and Ham">
+                    <div class="category-info">
+                        <h3>Double Cheese and Ham</h3>
+                        <p>Cheese croissant, melted Emmental cheese, beef ham, fresh tomato & salad. ADD BEEF BACON/HAM +20.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--The Monsieur Spoon Club Sandwich-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="monsier sandwiches best" onclick="handleClick('The Monsieur Spoon Club Sandwich', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sandwich/themonsierspoonclubsandwhich.jpg" alt="The Monsieur Spoon Club Sandwich">
+                    <div class="category-info">
+                        <h3>The Monsieur Spoon Club Sandwich | 75</h3>
+                        <p>White toast, rosemary chicken, creamy egg mayo, tomato, lettuce, mozzarella cheese, and aioli (creamy)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--French Dip Pulled Beef Baguette-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="baguette beef" onclick="handleClick('French Dip Pulled Beef Baguette', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sandwich/frenchdippulledbeefbaguette.jpg" alt="French Dip Pulled Beef Baguette">
+                    <div class="category-info">
+                        <h3>French Dip Pulled Beef Baguette</h3>
+                        <p>Baguette, daging sapi suwir yang dimasak perlahan, fondue tomat, bawang karamel, krim parmesan, dan keju mozzarella disajikan dengan saus au jus (saus kaldu daging)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Toasted Mushroom Baguette-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="baguette" onclick="handleClick('Toasted Mushroom Baguette', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sandwich/toastedmushroombaguette.jpg" alt="Toasted Mushroom Baguette">
+                    <div class="category-info">
+                        <h3>Toasted Mushroom Baguette</h3>
+                        <p>Baguette dengan tiga jenis jamur, keju ricotta, campuran salad, acar bawang, dan lobak merah.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+
+        <div class="menu-category-header" id="salad">
+            <h2>SALAD</h2>
+        </div>
+            <div class="menu-categories">
+                <div class="category-item" data-category="salad healthy" onclick="handleClick('Peach Salad', this)">
+                    <a href="#" class="no-link">
+                        <img src="img/salad&soup/peachsalad.jpg" alt="Peach Salad">
+                        <div class="category-info">
+                            <h3>Peach Salad</h3>
+                            <p>Peach, buncis kecil, tomat ceri, kyuri, selada, dan bawang, disajikan dengan krim keju, fresh dill, dan ditambahkan irisan almond.</p>
+                        </div>
+                    </a>
+                </div>
+            </div>
+        <!--Shrimp Avocado Salsa Salad-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="salad" onclick="handleClick('Shrimp Avocado Salsa Salad', this)">
+                <a href="#" class="no-link">
+                    <img src="img/salad&soup/shrimpavocadosalsasalad.jpg" alt="Shrimp Avocado Salsa Salad">
+                    <div class="category-info">
+                        <h3>Shrimp Avocado Salsa Salad</h3>
+                        <p>Garlic sauteéd shrimp, avocado, romaine, and salsa dressing (saus segar & sedikit pedas)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Watermelon Feta Salad-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="salad" onclick="handleClick('Watermelon Feta Salad', this)">
+                <a href="#" class="no-link">
+                    <img src="img/salad&soup/watermelonfetasalad.jpg" alt="Watermelon Feta Salad">
+                    <div class="category-info">
+                        <h3>Watermelon Feta Salad</h3>
+                        <p>Fresh watermelon, feta cheese, olive oil, lemon, and basil.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Classic Caesar Salad-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="salad best" onclick="handleClick('Classic Caesar Salad', this)">
+                <a href="#" class="no-link">
+                    <img src="img/salad&soup/classiccaesarsalad.jpg" alt="Classic Caesar Salad">
+                    <div class="category-info">
+                        <h3>Classic Caesar Salad | 59 With Chicken 69</h3>
+                        <p>Romaine lettuce, croutons, boiled egg, bacon, grana padano, and anchovy dressing</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Smoked Chicken Salad-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="salad best" onclick="handleClick('Smoked Chicken Salad', this)">
+                <a href="#" class="no-link">
+                    <img src="img/salad&soup/smokedchickensalad.jpg" alt="Smoked Chicken Salad">
+                    <div class="category-info">
+                        <h3>Smoked Chicken Salad</h3>
+                        <p>Smoked chicken, romaine lettuce, red onions, cherry tomatoes, and plum sugar dressing</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Vegetarian Nicoise Salad-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="salad best" onclick="handleClick('Vegetarian Nicoise Salad', this)">
+                <a href="#" class="no-link">
+                    <img src="img/salad&soup/vegetariannicoisesalad.jpg" alt="Vegetarian Nicoise Salad">
+                    <div class="category-info">
+                        <h3>Vegetarian Nicoise Salad</h3>
+                        <p>A super summer salad, green beans, cherry tomatoes, kalamata olives, lettuce, and red onions</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Leafy Green Salad-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="salad" onclick="handleClick('Leafy Green Salad', this)">
+                <a href="#" class="no-link">
+                    <img src="img/salad&soup/leafygreensalad.jpeg" alt="Leafy Green Salad">
+                    <div class="category-info">
+                        <h3>Leafy Green Salad</h3>
+                        <p>A mix of green salad dressed with a house vinaigrette.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+
+        <div class="menu-category-header" id="soup">
+            <h2>SOUP</h2>
+        </div>
+        <!--French Onion Soup-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="soup" onclick="handleClick('French Onion Soup', this)">
+                <a href="#" class="no-link">
+                    <img src="img/soup/frenchonionsoup.jpg" alt="French Onion Soup">
+                    <div class="category-info">
+                        <h3>French Onion Soup</h3>
+                        <p>A comforting blend of caramelized onions, melted emmental cheese, and a slice of toasted sourdough bread. Hearty and satisfying.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Mushroom Soup -->
+        <div class="menu-categories">
+            <div class="category-item" data-category="soup best" onclick="handleClick('Mushroom Soup', this)">
+                <a href="#" class="no-link">
+                    <img src="img/soup/mushroom soup.jpg" alt="Mushroom Soup">
+                    <div class="category-info">
+                        <h3>Mushroom Soup</h3>
+                        <p>Rich flavor, lembut, dan dipenuhi dengan kebaikan jamur yang earthy. Favorit klasik yang terasa seperti pelukan dalam mangkuk.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Pumpkin Soup-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="soup" onclick="handleClick('Pumpkin Soup', this)">
+                <a href="#" class="no-link">
+                    <img src="img/soup/pumpkin soup.jpg" alt="Pumpkin Soup">
+                    <div class="category-info">
+                        <h3>Pumpkin Soup</h3>
+                        <p>Creamy pumpkin soup swirled with crème fraîche and topped with caramelized onion and feta cheese bruchetta.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Sweet Corn Brûlée Soup-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="keyword sweet best anak kid" onclick="handleClick('Sweet Corn Brûlée Soup', this)">
+                <a href="#" class="no-link">
+                    <img src="img/soup/sweet corn brule soup.jpg" alt="Sweet Corn Brûlée Soup">
+                    <div class="category-info">
+                        <h3>Sweet Corn Brûlée Soup</h3>
+                        <p>Sup jagung manis panggang, jagung manis panggang, kue jagung kering, dan minyak hijau.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+
+        <div class="menu-category-header" id="entree">
+            <h2>Entree</h2>
+        </div>
+        <!--Croque Madame-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="entree crispy tasty creamy best" onclick="handleClick('Croque Madame', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sandwich/croquemadame.jpg" alt="Croque Madame">
+                    <div class="category-info">
+                        <h3>Croque Madame</h3>
+                        <p>Creamy bechamel, egg, beef ham, emmental cheese, grana padano, and parsley (Crispy outside creamy inside)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Truffle Egg In Jar-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="brunch entree savoury" onclick="handleClick('Truffle Egg In Jar', this)">
+                <a href="#" class="no-link">
+                    <img src="img/brunch/truffleegginjar.jpeg" alt="Truffle Egg In Jar">
+                    <div class="category-info">
+                        <h3>Truffle Egg In Jar</h3>
+                        <p>Telur, mash potato, cheese & mushroom yang di sajikan di dalam jar dengan sourdough (Savoury)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Beef Bacon Croquette-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="beef bacon entree croquette best" onclick="handleClick('Beef Bacon Croquette', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sidedish/beefbaconcroquette.jpg" alt="Beef Bacon Croquette">
+                    <div class="category-info">
+                        <h3>Beef Bacon Croquette</h3>
+                        <p>Croquette stuffed with beef bacon and creamy parmesan.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--L’escargot-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="entree panggang baked garlic butter beef bacon snails" onclick="handleClick('L’escargot', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sidedish/leescargot.jpg" alt="L’escargot">
+                    <div class="category-info">
+                        <h3>L’escargot</h3>
+                        <p>Snails yang di panggang dengan garlic butter, mushroom, beef bacon & spinach (bayam)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Gnocchi Chicken Mushroom-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="entree gnochi mushroom blackpaper chicken" onclick="handleClick('Gnocchi Chicken Mushroom', this)">
+                <a href="#" class="no-link">
+                    <img src="img/entree/gnochichickenmushroom.jpg" alt="Gnocchi Chicken Mushroom">
+                    <div class="category-info">
+                        <h3>Gnocchi Chicken Mushroom</h3>
+                        <p>Gnocchi served with chicken and sautéed shiitake mushrooms in black pepper sauce.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Sauteed mushroom-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="entree sauteed sauted mushroom butter rempah" onclick="handleClick('Sautéed Mushrooms', this)">
+                <a href="#" class="no-link">
+                    <img src="img/entree/sautedmushroom.jpg" alt="Sautéed Mushrooms">
+                    <div class="category-info">
+                        <h3>Sautéed Mushrooms</h3>
+                        <p>Campuran tiga jamur lokal yang ditumis ringan dengan butter dan rempah-rempah.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+
+
+        <div class="menu-category-header" id="side">
+            <h2>SIDE</h2>
+        </div>
+        <!--Truffle & Parmesan French Fries | 65-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="side kentang fries best" onclick="handleClick('Truffle & Parmesan French Fries', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sidedish/truffleparmesanfrenchfries.jpg" alt="Truffle & Parmesan French Fries | 65">
+                    <div class="category-info">
+                        <h3>Truffle & Parmesan French Fries</h3>
+                        <p>French fries, parmesan, truffle oil, and porcini salt.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Hand Cut French Fries-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="side kentang fries best" onclick="handleClick('Hand Cut French Fries', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sidedish/handcutfrenchfries.jpg" alt="Hand Cut French Fries">
+                    <div class="category-info">
+                        <h3>Hand Cut French Fries</h3>
+                        <p>Traditionally thin, hand cut, crispy fries....scrumptious!</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Mashed Potato-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="side mashed potato" onclick="handleClick('Mashed Potato', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sidedish/mashedpotato.jpg" alt="Mashed Potato">
+                    <div class="category-info">
+                        <h3>Mashed Potato</h3>
+                        <p>Kentang yang dihaluskan dengan butter dan krim.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Mashed Potato-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="side mashed potato" onclick="handleClick('Potato Gratin', this)">
+                <a href="#" class="no-link">
+                    <img src="img/sidedish/pottatogratin.jpg" alt="Potato Gratin">
+                    <div class="category-info">
+                        <h3>Potato Gratin</h3>
+                        <p>Kentang yang dihaluskan dengan butter dan krim.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+        <div class="menu-category-header" id="pasta">
+            <h2>PASTA</h2>
+        </div>
+        <!--Angel hair aglio olio-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="pasta best" onclick="handleClick('Angel Hair Aglio Olio', this)">
+                <a href="#" class="no-link">
+                    <img src="img/pasta/angelhairaglioolio.jpg" alt="Angel Hair Aglio Olio">
+                    <div class="category-info">
+                        <h3>Angel Hair Aglio Olio</h3>
+                        <p>Aglio olio klasik dengan tomat setengah kering, udang raja yang dipanggang dan dimarinasi, serta horenzo..</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+    <!--Tagliatelle bistecca-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="pasta best" onclick="handleClick('Tagliatelle Bistecca', this)">
+            <a href="#" class="no-link">
+                <img src="img/pasta/Tagliatelle Bistecca.jpg" alt="Tagliatelle Bistecca">
+                <div class="category-info">
+                    <h3>Tagliatelle Bistecca</h3>
+                    <p>Berisikan tagliatelle diberi topping US striploin yang dibakar menggunakan arang & jamur shitake, disiram dengan creamy beef sauce dengan taburan keju parmesan.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Mac & cheese -->
+    <div class="menu-categories">
+        <div class="category-item" data-category="pasta macaroni" onclick="handleClick('Mac n’ Cheese', this)">
+            <a href="#" class="no-link">
+                <img src="img/pasta/macncheese.jpg" alt="Mac n’ Cheese">
+                <div class="category-info">
+                    <h3>Mac n’ Cheese</h3>
+                    <p>Macaroni cooked in rich cream, grana padano (italian cheese), and crispy beef bacon.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Fettuccine Beef Ragout -->
+    <div class="menu-categories">
+        <div class="category-item" data-category="beef pasta best" onclick="handleClick('Fettuccine Beef Ragout', this)">
+            <a href="#" class="no-link">
+                <img src="img/pasta/Fettuccine Beef Ragout.jpg" alt="Fettuccine Beef Ragout">
+                <div class="category-info">
+                    <h3>Fettuccine Beef Ragout</h3>
+                    <p>Classic fettuccine (pasta berbentuk pita lebar) with beef ragout in rich tomato sauce.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Black Truffle Penne-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="pasta penne rich flavor best" onclick="handleClick('Black Truffle Penne', this)">
+            <a href="#" class="no-link">
+                <img src="img/pasta/blacktrufflepenne.jpg" alt="Black Truffle Penne">
+                <div class="category-info">
+                    <h3>Black Truffle Penne 95 | Add chicken atau beef bacon/ham +20.</h3>
+                    <p>Pasta penne cooked with black truffle, cream and cheese parmesan, disajikan dengan sourdough.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Creamy Spaghetti Carbonara with Chicken -->
+    <div class="menu-categories">
+        <div class="category-item" data-category="pasta creamy" onclick="handleClick('Creamy Spaghetti Carbonara with Chicken', this)">
+            <a href="#" class="no-link">
+                <img src="img/pasta/Creamy Spaghetti Carbonara with Chicken.jpg" alt="Creamy Spaghetti Carbonara with Chicken">
+                <div class="category-info">
+                    <h3>Creamy Spaghetti Carbonara with Chicken</h3>
+                    <p>Classic spaghetti carbonara with chicken, beef bacon & parmesan cheese.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Wagyu Beef Lasagna-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="pasta creamy beef rich best" onclick="handleClick('Wagyu Beef Lasagna', this)">
+            <a href="#" class="no-link">
+                <img src="img/pasta/wagyubeeflasagna.jpg" alt="Wagyu Beef Lasagna">
+                <div class="category-info">
+                    <h3>Wagyu Beef Lasagna</h3>
+                    <p>Wagyu beef, Bechamel (saus krim putih terbuat dari mentega) & creamy tomato sauce, grana padano & moza cheese.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <div class="menu-category-header" id="mains">
+        <h2>MAINS</h2>
+    </div>
+    <!--Black Angus Striploin O’Connor Beef 300gr-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="mains steak beef rich earthy savory savoury umamy best" onclick="handleClick('Black Angus Striploin O’Connor Beef 300gr', this)">
+            <a href="#" class="no-link">
+                <img src="img/mains/blackangusstriploinoconnorbeef300gr.jpg" alt="Black Angus Striploin O’Connor Beef 300gr">
+                <div class="category-info">
+                    <h3>Black Angus Striploin O’Connor Beef 300gr | 595</h3>
+                    <p>hidangan ini menawarkan kombinasi rasa savory (gurih), sedikit manis, dan umami</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Black Angus Striploin O’Connor Beef 300gr-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="mains entree beef rich" onclick="handleClick('Wagyu Beef Bourguignon', this)">
+            <a href="#" class="no-link">
+                <img src="img/mains/Wagyu Beef Bourguignon.jpg" alt="Wagyu Beef Bourguignon | 190">
+                <div class="category-info">
+                    <h3>Wagyu Beef Bourguignon | 190</h3>
+                    <p>Wagyu Beef yang Dimasak Perlahan Selama 24 Jam dalam Saus Merah Anggur, served with creamy mashed potato</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Australian Rib-eye Steak-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="mains entree beef rich blackpaper" onclick="handleClick('Australian Rib-eye Steak', this)">
+            <a href="#" class="no-link">
+                <img src="img/mains/australianrib.png" alt="Australian Rib-eye Steak">
+                <div class="category-info">
+                    <h3>Australian Rib-eye Steak 250gr| 299</h3>
+                    <p>Served with grilled vegetables, cherry tomatoes, cauliflower, romaine lettuce, black truffle butter and black pepper sauce.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Steak Frites-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="mains entree beef rich mix salad gurih salty" onclick="handleClick('Steak Frites', this)">
+            <a href="#" class="no-link">
+                <img src="img/mains/steakfrites.jpeg" alt="Steak Frites">
+                <div class="category-info">
+                    <h3>Steak Frites 200gr striploin | 230</h3>
+                    <p>Grilled striploin, crispy hand cut-fries, and mix salad, served with 'Cafe de Paris' sauce ( rasa yang gurih, sedikit asam).</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Steak Frites-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="mains entree beef rich juicy" onclick="handleClick('Beef Tongue', this)">
+            <a href="#" class="no-link">
+                <img src="img/mains/beeftongue.jpg" alt="Beef Tongue">
+                <div class="category-info">
+                    <h3>Beef Tongue | 160</h3>
+                    <p>Daging lidah sapi disajikan dengan pancake kentang parut dan saus spesial house-made.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Pan Seared Salmon-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="entree mains earthy sweet fresh mint" onclick="handleClick('Pan Seared Salmon', this)">
+            <a href="#" class="no-link">
+                <img src="img/entree/pansearedsalmon.jpg" alt="Pan Seared Salmon">
+                <div class="category-info">
+                    <h3>Pan Seared Salmon 150gr | 159</h3>
+                    <p>Salmon yang di panggang diatas wajan, tomato verge, palm sugar dressing & mix salad.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Chicken Ballotine-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="entree mains best" onclick="handleClick('Chicken Ballotine', this)">
+            <a href="#" class="no-link">
+                <img src="img/mains/chickenballotine.jpg" alt="Chicken Ballotine">
+                <div class="category-info">
+                    <h3>Chicken Ballotine | 159</h3>
+                    <p>Served with roasted baby potato, garlic sautéed spinach, corn puree, and fresh herb</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Chicken Cordon Bleu-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="entree mains tarragon fries best" onclick="handleClick('Chicken Cordon Bleu', this)">
+            <a href="#" class="no-link">
+                <img src="img/mains/Chicken Cordon Bleu.jpg" alt="Chicken Cordon Bleu">
+                <div class="category-info">
+                    <h3>Chicken Cordon Bleu | 137</h3>
+                    <p>Boneless chicken breast, beef bacon, mozarella cheese, sauce tarragon, mix salad and french fries.</p>
+                </div>
+            </a>
+        </div>
+    </div>
+    <!--Duck Leg Confit-->
+    <div class="menu-categories">
+        <div class="category-item" data-category="entree mains" onclick="handleClick('Duck Leg Confit | 147', this)">
+            <a href="#" class="no-link">
+                <img src="img/mains/Duck Leg Confit.jpg" alt="Duck Leg Confit | 147">
+                <div class="category-info">
+                    <h3>Duck Leg Confit | 147</h3>
+                    <p>Paha bebek confit (teknik memasak dengan perlahan dalam lemaknya sendiri), potato gratin & duck sauce</p>
+                </div>
+            </a>
+        </div>
+    </div>
+
+    <!-- Pembatas Kategori Nasi -->
+    <div class="menu-category-header" id="rice">
+        <h2>RICE</h2>
+    </div>
+        <!--Chicken Medallion-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="mains rice nasi best" onclick="handleClick('Chicken Medallion', this)">
+                <a href="#" class="no-link">
+                    <img src="img/rice/chickenmedallion.jpg" alt="Chicken Medallion">
+                    <div class="category-info">
+                        <h3>Chicken Medallion | 125</h3>
+                        <p>Chicken medallion in a balsamic reduction sauce served with basmati rice (Manis, asam & rich flavor). </p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--French Onion Rice Pilaf-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="entree rice nasi salty sweet" onclick="handleClick('French Onion Rice Pilaf', this)">
+                <a href="#" class="no-link">
+                    <img src="img/entree/frenchonionricepilaf.jpg" alt="French Onion Rice Pilaf">
+                    <div class="category-info">
+                        <h3>French Onion Rice Pilaf</h3>
+                        <p>Basmati rice with caramelized onion & butter (Salty & little bit sweet)</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Buttermilk Chicken with Rice-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="mains rice nasi best" onclick="handleClick('Buttermilk Chicken with Rice', this)">
+                <a href="#" class="no-link">
+                    <img src="img/rice/buttermilkchickenwithrice.jpg" alt="Buttermilk chicken with rice">
+                    <div class="category-info">
+                        <h3>Buttermilk Chicken with Rice | 110</h3>
+                        <p>Cripsy buttermilk chicken served with cream mushroom sauce and basmati rice.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Chicken Tarragon | 99-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="mains rice nasi" onclick="handleClick('Chicken Tarragon', this)">
+                <a href="#" class="no-link">
+                    <img src="img/rice/chickentarragon.jpg" alt="Chicken Tarragon">
+                    <div class="category-info">
+                        <h3>Chicken Tarragon | 99</h3>
+                        <p>Butter rice served with boneless chicken in creamy sauce and tarragon leaf.</p>
+                    </div>
+                </a>
+            </div>
+        </div>  
+        <!--Mykonos Meatball with Tzatziki | 120-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="mains rice nasi" onclick="handleClick('Mykonos Meatball with Tzatziki', this)">
+                <a href="#" class="no-link">
+                    <img src="img/rice/MykonosMeatballwithTzatziki.jpg" alt="Mykonos Meatball with Tzatziki">
+                    <div class="category-info">
+                        <h3>Mykonos Meatball with Tzatziki | 120</h3>
+                        <p>Baked meatballs served with tzatziki sauce and basmati rice.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+        <!--Slow Cooked Braised Beef-->
+        <div class="menu-categories">
+            <div class="category-item" data-category="mains rice nasi best" onclick="handleClick('Slow Cooked Braised Beef', this)">
+                <a href="#" class="no-link">
+                    <img src="img/rice/Slow CookedBraisedBeef.jpg" alt="Slow Cooked Braised Beef">
+                    <div class="category-info">
+                        <h3>Slow Cooked Braised Beef | 125</h3>
+                        <p>Baked meatballs served with tzatziki sauce and basmati rice.</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+
+
+        <!-- Pembatas Kategori Minuman -->
+        <div class="menu-category-header" id="deserts">
+            <h2>DESERTS</h2>
+        </div>
+        <div class="menu-categories">
+            <div class="category-item" data-category="display deserts">
+                <a href="#" class="no-link">
+                    <img src="img/display/deserts.jpg" alt="deserts">
+                    <div class="category-info">
+                        <h3>Deserts</h3>
+                        <p>Pick your favorites</p>
+                    </div>
+                </a>
+            </div>
+        </div>
+                <!--Eclair-->
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts" onclick="handleClick('Eclair Patissier Chocolate', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/eclairchocolate.jpg" alt="Eclair Patissier Chocolate">
+                            <div class="category-info">
+                                <h3>Eclair Patissier Chocolate | 36</h3>
+                                <p>diisi dengan krim cokelat yang kaya dan lembut. Bagian atasnya dilapisi dengan ganache cokelat yang halus, memberikan rasa manis yang seimbang dan tekstur yang memuaskan.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts" onclick="handleClick('Eclair Patissier Vanilla', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/eclairvanilla.jpg" alt="Eclair Patissier Vanilla">
+                            <div class="category-info">
+                                <h3>Eclair Patissier Vanilla | 36</h3>
+                                <p>iisi dengan krim vanila yang halus dan harum. Bagian atasnya dilapisi dengan icing vanila yang memberikan rasa manis yang seimbang.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!--Tartlet-->
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts" onclick="handleClick('Chocolate Tartlet', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/chocolatetartlet.jpg" alt="Chocolate Tartlet">
+                            <div class="category-info">
+                                <h3>Chocolate Tartlet | 39</h3>
+                                <p>terdiri dari lapisan dasar pastry renyah yang diisi dengan ganache cokelat pekat dan lembut.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts best" onclick="handleClick('Salted Caramel Tartlet', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/saltedcarameltartlet.jpg" alt="Salted Caramel Tartlet">
+                            <div class="category-info">
+                                <h3>Salted Caramel Tartelette | 39</h3>
+                                <p>tartlet dengan dasar pastry renyah yang diisi dengan caramel asin yang lembut dan kaya rasa</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!--Opera-->
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts best" onclick="handleClick('Opera')">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/opera.jpg" alt="Opera">
+                            <div class="category-info">
+                                <h3>Opera | 47</h3>
+                                <p>terdiri dari beberapa lapisan tipis almond sponge cake (joconde) yang dipadukan dengan krim mentega kopi dan ganache cokelat.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!--Mango and calamansi lime mouse-->
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts best" onclick="handleClick('Mango and calamansi lime mouse', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/Mango & Calamansi Lime Mousse.jpg" alt="Mango and calamansi lime mouse">
+                            <div class="category-info">
+                                <h3>Mango and Calamansi Lime Mousse | 49</h3>
+                                <p>Terdiri dari mangga halus dan manis dipadukan dengan lapisan calamansi lime yang memberikan sentuhan asam yang segar (manis & asam).</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!--Ultimate Chocolate Cake--> <!--DISCONTINUE-->
+                <!-- <div class="menu-categories">
+                    <div class="category-item" data-category="deserts" onclick="handleClick('Ultimate Chocolate Cake', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/Ultimate Chocolate Cake.jpg" alt="Ultimate Chocolate Cake">
+                            <div class="category-info">
+                                <h3>Ultimate Chocolate Cake | 47</h3> 
+                                <p>.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div> -->
+                <!--Lemon Cheese Cake-->
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts best" onclick="handleClick('Lemon Cheese Cake', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/lemoncheesecake.jpg" alt="Lemon Cheese Cake">
+                            <div class="category-info">
+                                <h3>Lemon Cheese Cake | 49</h3>
+                                <p>Cheesecake yang creamy dengan rasa lemon yang segar dan sedikit asam. Dibuat dengan dasar biskuit renyah (Manis & Segar lemon).</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts" onclick="handleClick('Madeleine', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/madeleine.jpg" alt="madeleine">
+                            <div class="category-info">
+                                <h3>Madeleine Vanilla / Chocolate</h3>
+                                <p>.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts" onclick="handleClick('Chanele', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/canele.jpg" alt="canele">
+                            <div class="category-info">
+                                <h3>Canele</h3>
+                                <p>.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts cake pistachio coklat" onclick="handleClick('Chocolate Pistachio Slice', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/chocolatepistachio.jpg" alt="Cake">
+                            <div class="category-info">
+                                <h3>Chocolate Pistachio Slice | 59</h3>
+                                <p>.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts cake coklat" onclick="handleClick('Hazelnut Chocolate', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/hazelnutchocolate.jpg" alt="Cake">
+                            <div class="category-info">
+                                <h3>Hazelnut Chocolate | 65</h3>
+                                <p>.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts cake biscoff" onclick="handleClick('Biscoff Slice', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/biscoffslice.jpg" alt="Biscoff Slice">
+                            <div class="category-info">
+                                <h3>Biscoff Slice | 59</h3>
+                                <p>.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Lemon Cheese Cake -->
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts best" onclick="handleClick('Raspberry Almond Cake', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/raspberry almond cake.jpg" alt="Raspberry and Almond Cake">
+                            <div class="category-info">
+                                <h3>Raspberry Almond Cake | 49</h3>
+                                <p>.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Lemon Meringue Tartelette -->
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts tartlet" onclick="handleClick('Lemon Meringue Tartelette', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/lemonmeringuetartlet.jpg" alt="Lemon Meringue Tartelette">
+                            <div class="category-info">
+                                <h3>Lemon Meringue Tartelette | 40</h3>
+                                <p>.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Strawberry Tartlette -->
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts tartlet" onclick="handleClick('Strawberry Tartelette', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/strawberrytartlet.jpeg" alt="Strawberry Tartelette">
+                            <div class="category-info">
+                                <h3>Strawberry Tartelette | 40</h3>
+                                <p>.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Royal Monsieur Spoon -->
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts cake best" onclick="handleClick('Royal Monsieur Spoon', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/royalmonsierspoon.jpg" alt="Royal Monsieur Spoon">
+                            <div class="category-info">
+                                <h3>Royal Monsieur Spoon | 47</h3> 
+                                <p>.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Cinnamon Apple Crumble -->
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts cake best" onclick="handleClick('Cinnamon Apple Crumble', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/cinnamonapplecrumble.jpg" alt="Cinnamon Apple Crumble">
+                            <div class="category-info">
+                                <h3>Cinnamon Apple Crumble | 45</h3> 
+                                <p>.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Tiramisu -->
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts cake" onclick="handleClick('Tiramisu', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/tiramisu.jpg" alt="Tiramisu">
+                            <div class="category-info">
+                                <h3>Tiramisu | 58</h3> 
+                                <p>.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="deserts cake makarun macaron makaron" onclick="handleClick('Macaron', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/deserts/macaron.jpg" alt="Macaron">
+                            <div class="category-info">
+                                <h3>Macaron | 18</h3> 
+                                <p>Rasa (Vanila, Strawberry, Lemon, Pistachio, Raspberry, Chocolate).</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                
+                <!-- Pembatas Kategori Minuman -->
+                <div class="menu-category-header" id="viennoseries">
+                    <h2>VIENNOSERIES</h2>
+                </div>
+                <!-- The Monsier Spoon Croissant -->
+                <div class="menu-categories">
+                    <div class="category-item" data-category="pastry viennoseris Croissant plain best flaky" onclick="handleClick('The Monsier Spoon Croissant', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/viennoseries/themonsierspooncroissant.jpeg" alt="The Monsier Spoon Croissant">
+                            <div class="category-info">
+                                <h3>The Monsier Spoon Croissant | 21</h3>
+                                <p>Plain Croissant yang terbuat dari butter lebih gurih & buttery taste (Buttery & flaky).</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="pastry viennoseris Croissant sweet flaky" onclick="handleClick('MustTry Chocolatine', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/viennoseries/musttrychocolatine.jpeg" alt="Must Try Chocolatine">
+                            <div class="category-info">
+                                <h3>Must Try Chocolatine | 25</h3>
+                                <p>Croissant dengan isi dark chocolate (Flaky & sweet).</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Black Croissant -->
+                <div class="menu-categories">
+                    <div class="category-item" data-category="pastry viennoseris" onclick="handleClick('Black Croissant', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/viennoseries/blackcroissant.jpeg" alt="Black Croissant">
+                            <div class="category-info">
+                                <h3>Black Croissant | 22</h3>
+                                <p>Rasa sama seperti Plain Croissant, namun hanya beda di adonan karena Black Croissant menggunakan charcoal (ada sensasi seperti pasir saat dimakan).</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <!-- Black Chocolatine -->
+                <div class="menu-categories">
+                    <div class="category-item" data-category="pastry viennoseris croissant" onclick="handleClick('Black Chocolatine', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/viennoseries/blackchocolatine.jpeg" alt="Black Chocolatine">
+                            <div class="category-info">
+                                <h3>Black Chocolatine | 28</h3>
+                                <p>Rasa sama seperti Must Try Chocolatine, beda di adonan karena menggunakan charcoal (ada sensasi seperti pasir saat dimakan).</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>                
+
+<!--Cheese Croissant-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris croissant" onclick="handleClick('Cheese Croissant', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/cheesecroissant.jpeg" alt="Cheese Croissant">
+            <div class="category-info">
+                <h3>Cheese Croissant</h3>
+                <p>Croissant renyah dengan lapisang yang berlapis-lapis, diisi dengan keju leleh yang gurih ().</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Pepito-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris pepito croissant best" onclick="handleClick('Pepito', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/pepito.jpeg" alt="Pepito">
+            <div class="category-info">
+                <h3>Pepito</h3>
+                <p>Croissant dengan isi vanilla cream & coklat inside.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Blueberry Coconut Pepito-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris pepito croissant blueberry coconut" onclick="handleClick('Blueberry Coconut Pepito', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/blueberrycoconutpepito.jpg" alt="Pepito Blueberry Coconut">
+            <div class="category-info">
+                <h3>Blueberry Coconut Pepito</h3>
+                <p>Croissant dengan Blueberry & Coconut flake.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Pepito Coconut-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris pepito croissant coconut" onclick="handleClick('Pepito Coconut', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/pepito coconut.jpeg" alt="Pepito Coconut">
+            <div class="category-info">
+                <h3>Pepito Coconut</h3>
+                <p>Croissant dengan isi creammy coconut & white chocolate inside (coconut flake diatasnya).</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Banana Chocolate Pepito-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris pepito croissant best" onclick="handleClick('Banana Chocolate Pepito', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/bananachocolatepepito.jpg" alt="Banana Chocolate Pepito">
+            <div class="category-info">
+                <h3>Banana Chocolate Pepito</h3>
+                <p>Isi vanila cream, banana caramel & coklat inside dengan topping banana chocolate, caramel & kacang mete.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Cinnamon Croissant Roll-->
+<div class="menu-categories">
+    <div class="category-item" data-category="viennoseries croissant roll best" onclick="handleClick('Cinnamon Croissant Roll', this)">
+        <a href="#" class="no-link">
+            <img src="img/cinnamoncroissantroll.jpg" alt="Cinnamon Croissant Roll">
+            <div class="category-info">
+                <h3>Cinnamon Croissant Roll | 33</h3> 
+                <p>.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Strawberry Cromboloni-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris croissant cromboloni strawberry" onclick="handleClick('Strawberry Cromboloni', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/crombolonistrawberry.jpg" alt="Crom Straw">
+            <div class="category-info">
+                <h3>Strawberry Cromboloni | 40</h3>
+                <p>Cream Strawberry.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Chocolate Supreme Cromboloni-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris croissant cromboloni chocholate" onclick="handleClick('Chocolate Supreme Cromboloni', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/chocolatesupremecrom.jpeg" alt="Crom Straw">
+            <div class="category-info">
+                <h3>Chocolate Supreme Cromboloni | 40</h3>
+                <p>Chocolate.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Pistachio Cromboloni-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris croissant cromboloni pistachio best" onclick="handleClick('Pistachio Cromboloni', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/pistachiocromboloni.jpeg" alt="Crom">
+            <div class="category-info">
+                <h3>Pistachio Cromboloni | 40</h3>
+                <p>Cream pistachio inside and avocado outside.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Biscoff Cromboloni-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris croissant cromboloni best" onclick="handleClick('Biscoff Cromboloni', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/biscoffcrom.jpg" alt="Crom">
+            <div class="category-info">
+                <h3>Biscoff Cromboloni | 40</h3>
+                <p>Lotus (biscoff).</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Chocolate Palmier-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris croissant coklat" onclick="handleClick('Chocolate Palmier', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/chocolatepalmier.jpg" alt="Almond Croissant">
+            <div class="category-info">
+                <h3>Chocolate Palmier | 25</h3>
+                <p>Chocolate and granulated sugar.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Babka Nutella-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris croissant coklat" onclick="handleClick('Babka Nutella', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/babkanutella.jpg" alt="coklat nutela">
+            <div class="category-info">
+                <h3>Babka Nutella | 32</h3>
+                <p>Chocolate Nutella.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Almond Croissant-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris croissant best" onclick="handleClick('Almond Croissant', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/almondcroissant.jpg" alt="Almond Croissant">
+            <div class="category-info">
+                <h3>Almond Croissant | 35</h3>
+                <p>Croissant dengan isi almond cream & ditaburi almond slice serta icing sugar.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Almond Chocolatine-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris croissant best" onclick="handleClick('Almond Chocolatine', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/almonchocolatine.jpeg" alt="Almond Chocolatine">
+            <div class="category-info">
+                <h3>Almond Chocolatine</h3>
+                <p>Croissant dengan isi cream almond & Chocolate, ditabur almond slice & icing sugar.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Apple Chausson-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris croissant" onclick="handleClick('Apple Chausson', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/applechausson.jpeg" alt="Apple Chausson">
+            <div class="category-info">
+                <h3>Apple Chausson</h3>
+                <p>Puff pastry & renyah ketika digigit, dengan isian apel yg dimasak dengan sedikit gula serta kayu manis memberikan rasa manis & sedikit asam.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Beef Parmesan Chausson-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris croissant" onclick="handleClick('Beef Parmesan Chausson', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/beefparmesanchausson.jpg" alt="Beef Parmesan Chausson">
+            <div class="category-info">
+                <h3>Beef Parmesan Chausson</h3>
+                <p>Beef (daging dengan keju parmesan).</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Sausage Brood-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris croissant best" onclick="handleClick('Sausage Brood', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/sausagebrood.jpg" alt="Sausage Brood">
+            <div class="category-info">
+                <h3>Sausage Brood</h3>
+                <p>Isi meatball.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Raissin Swirl-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris croissant best" onclick="handleClick('Raissin Swirl', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/raisinswirl.jpeg" alt="Raissin Swirl">
+            <div class="category-info">
+                <h3>Raissin Swirl</h3>
+                <p>Puff pastry manis dengan kismis</p>
+            </div>
+        </a>
+    </div>
+</div>   
+
+<!--Pistachio Black Croissant-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris croissant" onclick="handleClick('Pistachio Black Croissant', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/pistachioblackcroisant.jpeg" alt="Pistachio Black Croissant">
+            <div class="category-info">
+                <h3>Pistachio Black Croissant | 22</h3>
+                <p>Croissant renyah dengan lapisan hitam yang unik, diisi dengan Cream pistachio inside</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Pistachio Black Chocolatine-->
+<div class="menu-categories">
+    <div class="category-item" data-category="pastry viennoseris croissant" onclick="handleClick('Pistachio Black Chocolatine', this)">
+        <a href="#" class="no-link">
+            <img src="img/viennoseries/pistachioblackchocolatine.jpeg" alt="Pistachio Black Chocolatine">
+            <div class="category-info">
+                <h3>Pistachio Black Chocolatine</h3>
+                <p>Puff pastry berwarna hitam pekat yang diisi dengan krim pistachio (Manis dan gurih)</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<!--Pembatas Kategori Minuman-->
+<div class="menu-category-header" id="drinks">
+    <h2>DRINKS</h2>
+</div>
+
+<div class="pad">
+    <div class="slider-wrappers">
+        <div class="kategori-item" data-target="kopi">Coffe</div>
+        <div class="kategori-item" data-target="icetea">Tea</div>
+        <div class="kategori-item" data-target="coklat">Chocolate</div>
+        <div class="kategori-item" data-target="jus">Juice</div>
+        <div class="kategori-item" data-target="smoothies">Smoothies</div>
+        <div class="kategori-item" data-target="mocktail">Mocktail</div>
+        <div class="kategori-item" data-target="signature">Signature</div>
+        <div class="kategori-item" data-target="water">Water</div>
+    </div>
+</div>
+
+<div class="menu-categories">
+    <div class="category-item" data-category="display drinks minuman">
+        <a href="#" class="no-link">
+            <img src="img/display/coffentea.jpg" alt="Coffe n tea">
+            <div class="category-info">
+                <h3>Coffe & tea</h3>
+                <p>Always ask hot / cold.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="menu-categories">
+    <div class="category-item" data-category="display drinks minuman">
+        <a href="#" class="no-link">
+            <img src="img/display/jus.jpg" alt="jus n drinks">
+            <div class="category-info">
+                <h3>Juice & drinks</h3>
+                <p></p>
+            </div>
+        </a>
+    </div>
+</div>
+
+
+
+<div class="menu-category-header" id="kopi">
+    <h2>Coffe</h2>
+</div>
+<!--Cafe Long Black-->
+<div class="menu-categories">
+    <div class="category-item" data-category="drinks coffe kopi americano best" onclick="handleClick('Cafe Long Black', this)">
+        <a href="#" class="no-link">
+            <img src="img/drinks/americano.jpg" alt="americano">
+            <div class="category-info">
+                <h3>Cafe Long Black | HOT / ICED</h3>
+                <p>Coffe Americano (2 Shot).</p>
+            </div>
+        </a>
+    </div>
+</div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks coffe kopi" onclick="handleClick('Cafe Cappuccino', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/cafecappucino.jpg" alt="cafecappucino">
+                            <div class="category-info">
+                                <h3>Cafe Cappuccino | HOT / ICED</h3>
+                                <p>Expresso topped with frothed milk.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks coffe kopi" onclick="handleClick('Cafe Oat Cappucino', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/oatcapcin.png" alt="Cafe Oat Cappucino">
+                            <div class="category-info">
+                                <h3>Cafe Oat Cappuccino | HOT / ICED</h3>
+                                <p></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks coffe kopi" onclick="handleClick('Cafe Mocha', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/cafemocha.png" alt="Cafe Mocha">
+                            <div class="category-info">
+                                <h3>Cafe Mocha | HOT / ICED</h3>
+                                <p></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks coffe kopi" onclick="handleClick('Cafe Latte', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/cafelatte.png" alt="Cafe Latte">
+                            <div class="category-info">
+                                <h3>Cafe Latte | HOT / ICED</h3>
+                                <p></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks coffe kopi" onclick="handleClick('Vanilla Latte', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/vanillalatte.png" alt="Vanilla Latte">
+                            <div class="category-info">
+                                <h3>Vanilla Latte | HOT / ICED</h3>
+                                <p></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks coffe kopi" onclick="handleClick('Caramel latte', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/icedcaramellatte.jpg" alt="Caramel latte">
+                            <div class="category-info">
+                                <h3>Caramel latte | HOT / ICED</h3>
+                                <p>sweet and refreshing made with espresso shot, fresh milk, and caramel syrup</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks coffe kopi" onclick="handleClick('Hazelnut Latte', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/hazelnutlatte.png" alt="Hazelnut Latte">
+                            <div class="category-info">
+                                <h3>Hazelnut Latte | HOT / ICED</h3>
+                                <p></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks coffe kopi best sweet manis" onclick="handleClick('Creme brulee latte', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/cremebruleelatte.jpg" alt="Creme brulee latte">
+                            <div class="category-info">
+                                <h3>Creme Brulee Latte | HOT / ICED</h3>
+                                <p>Burnt caramel with creamy vanilla, light toasted nuts. (Single Shot)</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks coffe kopi" onclick="handleClick('Oat Latte', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/oatlatte.png" alt="Oat Latte">
+                            <div class="category-info">
+                                <h3>Oat Latte | HOT / ICED</h3>
+                                <p></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks coffe kopi" onclick="handleClick('Pistachio Cookie Coffe Latte', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/pistachiocookie.png" alt="Pistachio Cookie Coffe Latte">
+                            <div class="category-info">
+                                <h3>Pistachio Cookie Coffe Latte | HOT / ICED</h3>
+                                <p></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks coffe kopi" onclick="handleClick('Cafe Expresso', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/cafeexpresso.png" alt="Cafe Expresso">
+                            <div class="category-info">
+                                <h3>Cafe Expresso</h3>
+                                <p></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks coffe kopi" onclick="handleClick('Cafe Machiato', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/cafemachiato.png" alt="Cafe Machiato">
+                            <div class="category-info">
+                                <h3>Cafe Machiato</h3>
+                                <p></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks coffe kopi" onclick="handleClick('Cafe Piccolo', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/cafepiccolo.png" alt="Cafe Piccolo">
+                            <div class="category-info">
+                                <h3>Cafe Piccolo</h3>
+                                <p></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks coffe kopi" onclick="handleClick('Cafe Flat White', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/cafeflatwhite.png" alt="Cafe Flat White">
+                            <div class="category-info">
+                                <h3>Cafe Flat White</h3>
+                                <p></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="milk baby kid" onclick="handleClick('Babyccino', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/babychinno.jpg" alt="Babyccino">
+                            <div class="category-info">
+                                <h3>Babyccino</h3>
+                                <p>For kids / baby</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-category-header" id="icetea">
+                    <h2>ICED TEA</h2>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks fresh best" onclick="handleClick('Lychee Iced Tea', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/lycheicetea.jpg" alt="Lychee Iced Tea">
+                            <div class="category-info">
+                                <h3>Lychee Iced Tea</h3>
+                                <p>Iced tea with lychee (sweet n fresh)</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>                 
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks fresh best" onclick="handleClick('Strawberry Iced Tea', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/icestrawberrytea.png" alt="Strawberry Ice Tea">
+                            <div class="category-info">
+                                <h3>Strawberry Iced Tea</h3>
+                                <p>Tea based, Strawberry syrup, gula cair, strawberry and lime slice</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks fresh" onclick="handleClick('Iced Tea', this)">>
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/icetea.png" alt="Icedstrawberry tea">
+                            <div class="category-info">
+                                <h3>Iced Tea</h3>
+                                <p>Tea based, and Ice Cube (No Sugar)</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks fresh" onclick="handleClick('Ice Lemon Tea', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/icelemontea.png" alt="Ice Lemon Tea">
+                            <div class="category-info">
+                                <h3>Ice Lemon Tea</h3>
+                                <p>Tea based, Lemon juice, gula cair & lemon slice</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks fresh" onclick="handleClick('Peach Iced Tea', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/icelemontea.png" alt="Peach Iced Tea">
+                            <div class="category-info">
+                                <h3>Peach Iced Tea</h3>
+                                <p>Tea based, Peach syrup, gula cair 10ml & peach slice</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-category-header" id="icetea">
+                    <h2>HOT TEA</h2>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks hot tea HT" onclick="handleClick('Ubud Garden', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/ubudgarden.png" alt="ubud garden">
+                            <div class="category-info">
+                                <h3>Ubud Garden</h3>
+                                <p>Greentea, lemongrass & mint (hangat)</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks hot tea HT" onclick="handleClick('Nalesha Peach', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/naleshapeach.png" alt="naleshapeach">
+                            <div class="category-info">
+                                <h3>Nalesha Peach</h3>
+                                <p>Greentea, marigold & peach</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks hot tea HT" onclick="handleClick('BerryBiscous', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/berrybiscous.png" alt="BerryBiscous">
+                            <div class="category-info">
+                                <h3>BerryBiscous</h3>
+                                <p>Fruity & Refreshing - Hibiscus & Berry</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks hot tea HT" onclick="handleClick('Chamomile', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/chamomile.png" alt="Chamomile">
+                            <div class="category-info">
+                                <h3>Chamomile</h3>
+                                <p>Smoothing & Healing - Organic tea, chamomile & lavender</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks hot tea HT" onclick="handleClick('Royal Breakfast', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/royalbreakfast.png" alt="Royal breakfast">
+                            <div class="category-info">
+                                <h3>Royal Breakfast</h3>
+                                <p>Black Tea</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks hot tea HT" onclick="handleClick('Hot Lemon Tea', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/hotlemontea.png" alt="Hot Lemon Tea">
+                            <div class="category-info">
+                                <h3>Hot Lemon Tea</h3>
+                                <p>Fresh lemon and black tea</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-category-header" id="coklat">
+                    <h2>CHOCOLATE</h2>
+                </div>
+<!--                 <div class="menu-categories"></div>
+    <div class="category-item" data-category="display drinks minuman">
+        <a href="#" class="no-link">
+            <img src="img/drinks/cok.jpg" alt="Chocolate Heritage">
+            <div class="category-info">
+                <h3>Ice Chocolate Herritage</h3>
+                <p>Pick your favorites</p>
+            </div>
+        </a>
+    </div>
+</div> -->
+
+<div class="menu-categories">
+    <div class="category-item" data-category="display">
+        <a href="#" class="no-link">
+            <img src="img/drinks/cok.jpg" alt="Display Item 1">
+            <div class="category-info">
+                <h3>Chocolate Heritage</h3>
+                <p>Only ICE (Hot Not Available).</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="menu-categories">
+    <div class="category-item" data-category="drinks coklat mint" onclick="handleClick('Iced Chocolate Mint', this)">
+        <a href="#" class="no-link">
+            <img src="img/drinks/icedchocolatemint.png" alt="Iced Chocolate Mint">
+            <div class="category-info">
+                <h3>Iced Chocolate Mint</h3>
+                <p>Available Chocolate Java / Kalimantan.</p>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="menu-categories">
+    <div class="category-item" data-category="drinks coklat" onclick="handleClick('Iced Chocolate Pinacolada', this)">
+        <a href="#" class="no-link">
+            <img src="img/drinks/icedchocolatepinacolada.png" alt="Iced Chocolate Pinacolada">
+            <div class="category-info">
+                <h3>Iced Chocolate Pinacolada</h3>
+                <p>Available Chocolate Java / Kalimantan.</p>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="menu-categories">
+    <div class="category-item" data-category="drinks coklat pistachio" onclick="handleClick('Iced Chocolate Pistachio', this)">
+        <a href="#" class="no-link">
+            <img src="img/drinks/icedchocolatepistachio.png" alt="Iced Chocolate Pistachio">
+            <div class="category-info">
+                <h3>Iced Chocolate Pistachio</h3>
+                <p>Available Chocolate Java / Kalimantan.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="menu-categories">
+    <div class="category-item" data-category="drinks coklat pistachio" onclick="handleClick('Indulgent Chocolate', this)">
+        <a href="#" class="no-link">
+            <img src="img/drinks/indulgentchocolate.png" alt="Indulgent Chocolate">
+            <div class="category-info">
+                <h3>Indulgent Chocolate</h3>
+                <p>Available Hot / Iced.</p>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="menu-categories">
+    <div class="category-item" data-category="drinks coklat oat milk oatmilk" onclick="handleClick('Indulgent Chocolate With Oat Milk', this)">
+        <a href="#" class="no-link">
+            <img src="img/drinks/indulgentchocolatewithoatmilk.png" alt="Indulgent Chocolate with oat">
+            <div class="category-info">
+                <h3>Indulgent Chocolate With Oat Milk</h3>
+                <p>Available Hot / Iced.</p>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="menu-categories">
+    <div class="category-item" data-category="drinks coklat marshmellow" onclick="handleClick('Fluffy Marshmallow Chocolate', this)">
+        <a href="#" class="no-link">
+            <img src="img/drinks/fluffymarsh.png" alt="Fluffy Marshmallow Chocolate">
+            <div class="category-info">
+                <h3>Fluffy Marshmallow Chocolate</h3>
+                <p>Available Hot / Iced.</p>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="menu-categories">
+    <div class="category-item" data-category="drinks coklat marshmellow" onclick="handleClick('Chocolate Crumble Latte', this)">
+        <a href="#" class="no-link">
+            <img src="img/drinks/chocolatecrumblelatte.png" alt="Chocolate Crumble Latte">
+            <div class="category-info">
+                <h3>Chocolate Crumble Latte</h3>
+                <p>Available Hot / Iced.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+<div class="menu-category-header" id="jus">
+    <h2>Juice</h2>
+</div>
+<div class="menu-categories">
+    <div class="category-item" data-category="drinks jus watermelon semangka melon pepaya lime" onclick="handleClick('Bali Mix', this)">
+        <a href="#" class="no-link">
+            <img src="img/drinks/balimix.png" alt="Bali Mix">
+            <div class="category-info">
+                <h3>Bali Mix</h3>
+                <p>Watermelon - Papaya - Melon.</p>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="menu-categories">
+    <div class="category-item" data-category="drinks banana pisang" onclick="handleClick('Exotic Juice', this)">
+        <a href="#" class="no-link">
+            <img src="img/drinks/exoticjuice.png" alt="Exotic Juice">
+            <div class="category-info">
+                <h3>Exotic Juice</h3>
+                <p>Banana - Passion Fruit - Pineapple.</p>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="menu-categories">
+    <div class="category-item" data-category="drinks banana orange jeruk watermelon semangka lime" onclick="handleClick('Pure Freshness', this)">
+        <a href="#" class="no-link">
+            <img src="img/drinks/purefresh.png" alt="Pure Freshness">
+            <div class="category-info">
+                <h3>Pure Freshness</h3>
+                <p>Orange - Watermelon - Mint Leaves - Lime.</p>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="menu-categories">
+    <div class="category-item" data-category="drinks jeruk orange" onclick="handleClick('Pure Orange Juice', this)">
+        <a href="#" class="no-link">
+            <img src="img/drinks/pureorange.png" alt="Pure Orange Juice">
+            <div class="category-info">
+                <h3>Pure Orange Juice</h3>
+                <p>100% Orange Juice.</p>
+            </div>
+        </a>
+    </div>
+</div>
+<!--COLD PRESS-->
+<div class="menu-categories">
+    <div class="category-item" data-category="drinks healthy sehat" onclick="handleClick('Cold Press - Green Detox', this)">
+        <a href="#" class="no-link">
+            <img src="img/drinks/greendetox.png" alt="Cold Press - Green Detox">
+            <div class="category-info">
+                <h3>Cold Press - Green Detox</h3>
+                <p>Cucumber - Spinach - Pineapple - Lime.</p>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="menu-categories">
+    <div class="category-item" data-category="drinks ginger jahe" onclick="handleClick('Cold Press - Orange VItamine', this)">
+        <a href="#" class="no-link">
+            <img src="img/drinks/orangevit.png" alt="Cold Press - Orange VItamine">
+            <div class="category-info">
+                <h3>Cold Press - Orange VItamine</h3>
+                <p>Carrot - Ginger - Orange - Turmeric - Lime.</p>
+            </div>
+        </a>
+    </div>
+</div>
+<div class="menu-categories">
+    <div class="category-item" data-category="drinks banana" onclick="handleClick('Cold Press - Purple Therapy', this)">
+        <a href="#" class="no-link">
+            <img src="img/drinks/purpletherapy.png" alt="Cold Press - Purple Therapy">
+            <div class="category-info">
+                <h3>Cold Press - Purple Therapy</h3>
+                <p>Carrot - Ginger - Orange - Turmeric - Lime.</p>
+            </div>
+        </a>
+    </div>
+</div>
+
+                <div class="menu-category-header" id="signature">
+                    <h2>Signature</h2>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks coffe kopi soda" onclick="handleClick('Ice Coffe Lemon', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/icedcoffelemon.jpg" alt="Creme brulee latte">
+                            <div class="category-info">
+                                <h3>Iced Coffe Lemon</h3>
+                                <p>Lemon - Ginger Ale - Espresso.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks fresh" onclick="handleClick('Dragon Go Nuts', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/dragongonuts.jpeg" alt="Dragon Go Nuts">
+                            <div class="category-info">
+                                <h3>Dragon Go Nuts</h3>
+                                <p>Mango - Coconut Water - Dragon Fruit</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-category-header" id="smoothies">
+                    <h2>Smoothies</h2>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks smoothies seger segar" onclick="handleClick('Dragon Mango', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/smoothiesdragonmango.jpg" alt="Smoothies Dragon Mango">
+                            <div class="category-info">
+                                <h3>Dragon Mango</h3>
+                                <p>Refreshing - Dragon Fruit, Mango and Freshly Squeezed Oranges.</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="smoothies drinks fresh kiwi banana" onclick="handleClick('Kiwi Kick', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/kiwikick.png" alt="Kiwi Kick">
+                            <div class="category-info">
+                                <h3>Kiwi Kick</h3>
+                                <p>Energizing - Kiwi and Banana</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="smoothies drinks fresh banana strawberry" onclick="handleClick('Strawberry Surf', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/smoothiesstrawberrysurf.jpg" alt="Smoothie Strawberry Surf">
+                            <div class="category-info">
+                                <h3>Strawberry Surf</h3>
+                                <p>Anti-Oxidant - Strawberry, Banana dan Mint</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-category-header" id="mocktail">
+                    <h2>Mocktail</h2>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks fresh lemonade" onclick="handleClick('Sunrise Berry Lemonade', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/Sunrise Berry Lemonade.jpg" alt="Sunrise Berry Lemonade">
+                            <div class="category-info">
+                                <h3>Sunrise Berry Lemonade</h3>
+                                <p>Strawberry Syrup, Lemon, Strawberry, Berrybiscous Tea</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks fresh" onclick="handleClick('Summer Paradise', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/Summer Paradise.jpg" alt="Summer Paradise">
+                            <div class="category-info">
+                                <h3>Summer Paradise</h3>
+                                <p>Kiwi, Lemon, Orange, Butterfly Pea</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks fresh minty" onclick="handleClick('Spring Purple', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/springpurple.jpg" alt="Spring Purple">
+                            <div class="category-info">
+                                <h3>Spring Purple</h3>
+                                <p>Sakura Syrup, Peach Syrup, Ginger Ale, Mint Leaf, Ginger Ale, Butterfly Pea</p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <div class="menu-category-header" id="water">
+                    <h2>Water</h2>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks" onclick="handleClick('Mineral Water', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/mineral.png" alt="Mineral Water">
+                            <div class="category-info">
+                                <h3>Mineral Water</h3>
+                                <p></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks" onclick="handleClick('Sparkling Water', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/sparkling.png" alt="Sparkling Water">
+                            <div class="category-info">
+                                <h3>Sparkling Water</h3>
+                                <p></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-categories">
+                    <div class="category-item" data-category="drinks" onclick="handleClick('Infused Water Strawberry Lemon', this)">
+                        <a href="#" class="no-link">
+                            <img src="img/drinks/infusedwater.png" alt="Infused Water Strawberry Lemon">
+                            <div class="category-info">
+                                <h3>Infused Water Strawberry Lemon</h3>
+                                <p></p>
+                            </div>
+                        </a>
+                    </div>
+                </div>
+
+                <!-- Chart Section -->
+                 <div class="content">
+                    <div id="chart-container">
+                        <h2>Order Request</h2>
+                        <ul id="chart-list"></ul>
+                        <textarea id="special-request" placeholder="Input special request here..."></textarea>
+                        <button id="clear-special-request" style="height: 35px; text-align: center; align-items: right; background-color: #f44336;">Clear Addons</button>
+                        <div class="button-container">
+                            <button class="button button-order" onclick="sendOrder()">Order</button>
+                            <button class="button button-clear" onclick="clearChart()">Clear</button> <!-- Tombol Clear -->
+                        </div>
+                    </div>
+                 </div>
+
+                 <!-- Spacer untuk memberikan jarak antara chart dan footer -->
+            <!-- <div style="height: 70px;"></div> -->
+
+            <main class="content">
+                <section id="promos">
+                    <h2>Promo Bank</h2>
+            
+                    <div class="promo-card">
+                        <h3>CIMB Niaga</h3>
+                        <p>Diskon 20% dengan minimal pembelanjaan Rp400.000, maksimal diskon Rp150.000.</p>
+                        <p class="validity">Berlaku setiap Sabtu dan Minggu.</p>
+                    </div>
+            
+                    <div class="promo-card">
+                        <h3>Bank BCA</h3>
+                        <p>Diskon 20% dengan minimal belanja Rp350.000, maksimal diskon Rp75.000 untuk semua kartu kredit BCA.</p>
+                        <p class="validity">Berlaku Senin hingga Kamis.</p>
+                    </div>
+            
+                    <div class="promo-card">
+                        <h3>Promo Maybank</h3>
+                        <p>Diskon 50% dengan minimal transaksi Rp500.000, maksimal diskon Rp300.000. Berlaku untuk kartu contactless dan kartu kredit Visa.</p>
+                        <p>Diskon 15% dengan minimal transaksi Rp500.000, maksimal diskon Rp150.000 untuk Mastercard DCB.</p>
+                        <p class="validity">Berlaku setiap hari.</p>
+                    </div>
+            
+                    <h2>Promo Grab</h2>
+            
+                    <div class="promo-card">
+                        <h3>Promo Grab Voucher</h3>
+                        <p>Voucher diskon Rp100.000 atau Rp200.000.</p>
+                        <p class="validity">Berlaku Senin hingga Jumat.</p>
+                    </div>
+            
+                    <div class="promo-card">
+                        <h3>Promo Grab Combo</h3>
+                        <p>Dapatkan diskon untuk Coklat atau Pistachio.</p>
+                        <p class="validity">Berlaku setiap Sabtu dan Minggu.</p>
+                    </div>
+            
+                    <h2>Promo Champ</h2>
+            
+                    <div class="promo-card">
+                        <h3>Promo Voucher Champ</h3>
+                        <p>Voucher diskon Rp100.000.</p>
+                        <p class="validity">Berlaku setiap hari.</p>
+                    </div>
+                </section>
+            </main>
+
+<!--             <main>
+                <div id="reader"></div>
+                <div id="result"></div>
+            </main> -->
+
+                <audio id="ting-sound" src="ting.mp3" preload="auto"></audio>
+
+
+
+    <!-- JavaScript -->
+    <script src="script.js"></script>
+
+<!-- Button to scroll to the top -->
+<div id="scroll-to-top" class="scroll-button">
+    <img src="img/up-arrow.png" alt="Scroll to Top">
+</div>
+
+<!-- Button to scroll to the bottom -->
+<div id="scroll-to-bottom" class="scroll-button">
+    <img src="img/down-arrow.png" alt="Scroll to Bottom">
+</div>
+
+<div class="footer">
+    <a href="#" class="home">
+        <i></i>
+        <span>Beranda</span>
+    </a>
+    <a href="#" class="promo">
+        <i></i>
+        <span>Promo</span>
+    </a>
+    <!-- QR Menu Added Here -->
+    <a href="https://gate1.champ-group.com/pos-service/" class="qr-reader" id="open-qr-scanner">
+        <i></i>
+        <span>POS Service</span>
+    </a>    
+    <!-- End of QR Menu -->
+    <a href="#" id="activity-link" class="aktivitas">
+        <i></i>
+        <span>Aktivitas</span>
+    </a>
+    <a href="#" class="chat">
+        <i></i>
+        <span>Menu</span>
+    </a>
+</div>
+
+<!-- QR Code Scanner Modal -->
+<div id="qr-scanner-modal" style="display: none;">
+    <div id="qr-scanner" style="width: 100%; height: 100%;"></div>
+    <button id="close-qr-scanner" style="position: absolute; top: 10px; right: 10px;">Close</button>
+</div>
+
+    </body>
