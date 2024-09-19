@@ -1,115 +1,202 @@
 <!DOCTYPE html>
-<html lang="id">
+<html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Food Menu</title>
-    <link rel="stylesheet" href="styles.css">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
+    <title>DPK Login</title>
+    <style>
+        body {
+            background-color: #f19262;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            font-family: Arial, sans-serif;
+            overflow: hidden; /* Hilangkan scroll */
+        }
+
+        .login-container {
+            text-align: center;
+            background-color: #c96b3c; /* Warna latar belakang body untuk mobile */
+            padding: 30px 20px;
+            border-radius: 10px;
+            width: 90%;
+            max-width: 320px;
+            box-shadow: 0 0 30px rgba(8, 0, 0, 0.664);
+            box-sizing: border-box; /* Pastikan padding tidak melebihi ukuran */
+        }
+
+        h2 {
+            margin: 0;
+            color: #6c4225;
+            font-size: 38px;
+            font-weight: bold;
+        }
+
+        .logo {
+            width: 100%;
+            max-width: 180px;
+            margin: 20px 0;
+        }
+
+        h3 {
+            color: #c92b22;
+            margin: 0 0 20px 0;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        .login-form {
+            background-color: #742707ea;
+            padding: 20px;
+            border-radius: 10px;
+            margin: 20px auto;
+            width: 100%;
+            box-sizing: border-box;
+        }
+
+        .login-form input {
+            width: calc(100% - 20px);
+            padding: 10px;
+            margin: 10px 0;
+            border: 1px solid #c55e10;
+            border-radius: 5px;
+            font-size: 16px;
+            display: block;
+            margin-left: auto;
+            margin-right: auto;
+        }
+
+        .login-form button {
+            width: calc(100% - 20px);
+            padding: 10px;
+            background-color: #e49a50;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            color: #6c4225;
+            font-weight: bold;
+            font-size: 16px;
+            margin: 10px auto;
+            display: block;
+        }
+
+        .login-form button:hover {
+            background-color: #fcbb8a;
+        }
+
+        .checkbox-container {
+            margin: 10px 0;
+            font-size: 12px; /* Kecilkan ukuran font */
+            color: #fdc196;
+            display: flex;
+            align-items: center;
+            justify-content: flex-start;
+            flex-direction: row-reverse; /* Membalik urutan elemen di dalam container */
+        }
+
+        .checkbox-container input[type="checkbox"] {
+            margin-left: 10px; /* Jarak antara checkbox dan label */
+            width: 15px; /* Kecilkan ukuran checkbox */
+            height: 15px; /* Kecilkan ukuran checkbox */
+        }
+
+        .checkbox-container label {
+            margin: 0; /* Hapus margin pada label */
+        }
+
+        .version {
+            color: #6c4225;
+            font-size: 12px;
+            margin-top: 10px;
+        }
+
+        /* Media queries untuk perangkat mobile */
+        @media (max-width: 480px) {
+            .login-container {
+                padding: 20px 15px;
+                width: 90%;
+                margin: 0 5%; /* Menambahkan jarak di sisi kiri dan kanan */
+                background-color: transparent; /* Hilangkan warna latar belakang */
+                border-radius: 0; /* Hilangkan border-radius */
+                box-shadow: none; /* Hilangkan box-shadow */
+            }
+
+            .login-form {
+                padding: 15px;
+            }
+
+            .login-form input {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            .login-form button {
+                padding: 8px;
+                font-size: 14px;
+            }
+
+            .checkbox-container {
+                font-size: 14px; /* Sesuaikan ukuran font label */
+            }
+        }
+    </style>
 </head>
-
-<header class="site-header">
-  <div class="header-container">
-      <div class="logo">
-          <a href="index.html">
-              <img src="img/logo.png" alt="Foodbook Logo">
-          </a>
-      </div>
-      <nav class="main-nav">
-          <ul>
-              <!-- <li><a href="#">Home</a></li> -->
-              <li><a href="#">Categories</a></li>
-<!--                     <li><a href="#">Blog</a></li>
-              <li><a href="#">Contact</a></li> -->
-          </ul>
-      </nav>
-      <div class="header-right">
-          <a href="#" class="search-icon">
-              <img src="img/search-icon.png" alt="Search">
-          </a>
-<!--                 <a href="#" class="profile-icon">
-              <img src="img/profile-icon.png" alt="Profile">
-          </a> -->
-      </div>
-  </div>
-</header>
-<!-- Pembatas Header -->
-
 <body>
-    <div class="menu-categories">
-      <div class="category-item">
-          <a href="brunch.html">
-              <img src="img/categories/brunch.jpg" alt="Brunch">
-              <div class="category-info">
-                  <h3>Brunch Menu</h3>
-                  <p>Start your day right</p>
-              </div>
-          </a>
-      </div>
-      <div class="category-item">
-          <a href="#">
-              <img src="img/categories/sandwhich.jpg" alt="Sandwiches">
-              <div class="category-info">
-                  <h3>Sandwiches</h3>
-                  <p>Delicious midday meals</p>
-              </div>
-          </a>
-      </div>
-      <div class="category-item">
-          <a href="#">
-              <img src="img//categories/salad.jpg" alt="Salad">
-              <div class="category-info">
-                  <h3>Salad</h3>
-                  <p>Evening delights</p>
-              </div>
-          </a>
-      </div>
-      <div class="category-item">
-          <a href="#">
-              <img src="img/categories/soup.jpg" alt="Soup">
-              <div class="category-info">
-                  <h3>Soup</h3>
-                  <p>Sweet treats</p>
-              </div>
-          </a>
-      </div>
-      <div class="category-item">
-        <a href="#">
-            <img src="img/categories/entree.jpg" alt="Entree">
-            <div class="category-info">
-                <h3>Entree</h3>
-                <p>Sweet treats</p>
+    <div class="login-container">
+        <h2>Monsier Spoon</h2>
+        <img src="img/champ.png" alt="Logo" class="logo">
+        <h3>INPUT YOUR NIP</h3>
+        <div class="login-form">
+            <input type="text" id="nip" placeholder="NIP">
+            <input type="password" id="password" placeholder="Password">
+            <div class="checkbox-container">
+                <label for="saveCredentials">Save ID & Password</label>
+                <input type="checkbox" id="saveCredentials">
             </div>
-        </a>
-      </div>
-      <div class="category-item">
-        <a href="#">
-            <img src="img/categories/sidedish.jpg" alt="sidedish">
-            <div class="category-info">
-                <h3>Side Dish</h3>
-                <p>Sweet treats</p>
-            </div>
-        </a>
-      </div>
-      <div class="category-item">
-        <a href="#">
-            <img src="img/categories/pasta.jpg" alt="Pasta">
-            <div class="category-info">
-                <h3>Pasta</h3>
-                <p>Sweet treats</p>
-            </div>
-        </a>
-      </div>
-      <div class="category-item">
-        <a href="#">
-            <img src="img/categories/drinks.jpg" alt="drinks">
-            <div class="category-info">
-                <h3>Drinks</h3>
-                <p>Sweet treats</p>
-            </div>
-        </a>
-      </div>
+            <button onclick="login()">SIGN IN</button>
+        </div>
+        <p class="version">PT. Champ Resto Indonesia Tbk.<br>Version 1.1.1</p>
     </div>
+    <script>
+        // Fungsi untuk memuat kredensial yang tersimpan saat halaman dimuat
+        window.onload = function() {
+            const savedNip = localStorage.getItem('savedNip');
+            const savedPassword = localStorage.getItem('savedPassword');
+            
+            if (savedNip && savedPassword) {
+                document.getElementById("nip").value = savedNip;
+                document.getElementById("password").value = savedPassword;
+                document.getElementById("saveCredentials").checked = true;
+            }
+        };
 
-    <!-- Konten lainnya di sini -->
+        function login() {
+            const nip = document.getElementById("nip").value;
+            const password = document.getElementById("password").value;
+            const saveCredentials = document.getElementById("saveCredentials").checked;
+
+            // Validasi login untuk dua kombinasi NIP dan Password
+            if ((nip === "P2408017" && password === "P2408017") || (nip === "admin" && password === "admin")) {
+                alert("Login Berhasil!");
+                
+                // Simpan kredensial jika checkbox dicentang
+                if (saveCredentials) {
+                    localStorage.setItem('savedNip', nip);
+                    localStorage.setItem('savedPassword', password);
+                } else {
+                    // Hapus kredensial jika tidak dicentang
+                    localStorage.removeItem('savedNip');
+                    localStorage.removeItem('savedPassword');
+                }
+
+                window.location.href = "menu.html"; // Ganti dengan halaman tujuan Anda
+            } else {
+                alert("NIP atau Password salah. Silakan coba lagi.");
+            }
+        }
+    </script>
 </body>
 </html>
