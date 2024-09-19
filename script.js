@@ -1,49 +1,54 @@
-// Simpan state chart secara otomatis saat ada perubahan
-const chartContainer = document.getElementById('chart-container');
-if (chartContainer) {
-    chartContainer.addEventListener('DOMSubtreeModified', saveChartState);
-}
-
-// Simpan state textarea secara otomatis saat ada perubahan
-const textArea = document.getElementById('content');
-if (textArea) {
-    textArea.addEventListener('input', saveTextAreaState);
-}
-
-// Simpan state sold-out secara otomatis saat ada perubahan pada elemen terkait (bisa disesuaikan)
-document.body.addEventListener('click', function(event) {
-    if (event.target.matches('.sold-out-toggle')) { // Misalnya class untuk tombol toggle sold-out
-        saveSoldOutState();
-    }
-});
-
-// Fungsi untuk menandai menu sebagai "sold out"
-function showSoldOut(menuItem) {
-    const soldOutMessage = menuItem.querySelector('.sold-out-message');
-    if (soldOutMessage) {
-        soldOutMessage.style.display = 'block'; // Tampilkan pesan "sold out"
-    }
-}
-
-
-// Simpan status chart ke Local Storage
+// Fungsi untuk menyimpan state chart ke Local Storage
 function saveChartState() {
     localStorage.setItem('chartState', JSON.stringify(chart));
 }
 
-// Simpan status sold out ke Local Storage
+// Fungsi untuk menyimpan state sold out ke Local Storage
 function saveSoldOutState() {
-    const soldOutItems = Array.from(document.querySelectorAll('.sold-out-message')).map(item => {
-        const menuName = item.previousElementSibling.querySelector('.category-info h3').innerText;
-        return menuName;
-    });
+    const soldOutItems = Array.from(document.querySelectorAll('.menu-categories'))
+        .filter(item => item.querySelector('.sold-out-message'))
+        .map(item => item.querySelector('.category-info h3').innerText);
     localStorage.setItem('soldOutState', JSON.stringify(soldOutItems));
 }
 
-// Simpan teks area ke Local Storage
+// Fungsi untuk menyimpan state textarea ke Local Storage
 function saveTextAreaState() {
-    const content = document.getElementById('content').value;
+    const content = document.getElementById('content') ? document.getElementById('content').value : '';
     localStorage.setItem('textAreaState', content);
+}
+
+// Fungsi untuk memuat state chart dari Local Storage
+function loadChartState() {
+    const savedChart = localStorage.getItem('chartState');
+    if (savedChart) {
+        Object.assign(chart, JSON.parse(savedChart));
+        displayChart();
+    }
+}
+
+// Fungsi untuk memuat state sold out dari Local Storage
+function loadSoldOutState() {
+    const savedSoldOutItems = localStorage.getItem('soldOutState');
+    if (savedSoldOutItems) {
+        const soldOutItems = JSON.parse(savedSoldOutItems);
+        document.querySelectorAll('.menu-categories').forEach(category => {
+            const categoryName = category.querySelector('.category-info h3').innerText;
+            if (soldOutItems.includes(categoryName)) {
+                showSoldOut(category);
+            }
+        });
+    }
+}
+
+// Fungsi untuk memuat state textarea dari Local Storage
+function loadTextAreaState() {
+    const savedContent = localStorage.getItem('textAreaState');
+    if (savedContent) {
+        const textArea = document.getElementById('content');
+        if (textArea) {
+            textArea.value = savedContent;
+        }
+    }
 }
 
 // Panggil fungsi simpan sebelum halaman ditinggal
@@ -53,39 +58,34 @@ window.onbeforeunload = function () {
     saveTextAreaState();
 };
 
-// Muat status chart dari Local Storage
-function loadChartState() {
-    const savedChart = localStorage.getItem('chartState');
-    if (savedChart) {
-        Object.assign(chart, JSON.parse(savedChart));
-        displayChart();
-    }
-}
+// Muat status halaman ketika dokumen siap
+document.addEventListener('DOMContentLoaded', function() {
+    loadChartState();
+    loadSoldOutState();
+    loadTextAreaState();
 
-// Muat status sold out dari Local Storage
-function loadSoldOutState() {
-    const savedSoldOutItems = localStorage.getItem('soldOutState');
-    if (savedSoldOutItems) {
-        const soldOutItems = JSON.parse(savedSoldOutItems);
-        soldOutItems.forEach(menuName => {
-            const items = document.querySelectorAll('.menu-categories');
-            items.forEach(item => {
-                const categoryInfo = item.querySelector('.category-info h3');
-                if (categoryInfo && categoryInfo.innerText === menuName) {
-                    showSoldOut(categoryInfo.closest('.category-item'));
-                }
-            });
-        });
+    // Tambahkan event listener untuk perubahan
+    const chartContainer = document.getElementById('chart-container');
+    if (chartContainer) {
+        chartContainer.addEventListener('DOMSubtreeModified', saveChartState);
     }
-}
 
-// Muat teks area dari Local Storage
-function loadTextAreaState() {
-    const savedContent = localStorage.getItem('textAreaState');
-    if (savedContent) {
-        document.getElementById('content').value = savedContent;
+    const textArea = document.getElementById('content');
+    if (textArea) {
+        textArea.addEventListener('input', saveTextAreaState);
     }
-}
+
+    document.body.addEventListener('click', function(event) {
+        if (event.target.matches('.sold-out-toggle')) {
+            saveSoldOutState();
+        }
+    });
+
+    // Additional event listeners and functionalities
+    // ...
+});
+
+
 
 
 // Memuat status halaman ketika dokumen siap
